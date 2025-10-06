@@ -27,7 +27,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const transactions = useMemo(() => {
     const previousBalanceTransaction: Transaction = {
       id: "initial-balance",
-      date: new Date(new Date().getFullYear(), new Date().getMonth(), 1), // First day of current month
+      date: new Date("2025/07/01"), // First day of the mock data month
       description: "Saldo del mes anterior",
       amount: initialBalance,
       type: "income",
