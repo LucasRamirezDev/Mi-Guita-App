@@ -2,7 +2,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { ArrowDownCircle, ArrowUpCircle, DollarSign, PiggyBank, Landmark, Wallet } from "lucide-react";
+import { ArrowDownCircle, ArrowUpCircle, DollarSign, Landmark, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTransactions } from "@/context/transactions-context";
 import { formatCurrency } from "@/lib/utils";
@@ -30,7 +30,7 @@ export function BalanceCards() {
   const currentBalance = initialBalance + totalIncome - totalExpenses;
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3 xl:grid-cols-6">
+    <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 xl:grid-cols-5">
       <Card className="xl:col-span-1">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Saldo del Mes Anterior</CardTitle>
@@ -65,18 +65,6 @@ export function BalanceCards() {
             {formatCurrency(totalExpenses)}
           </div>
           <p className="text-xs text-muted-foreground">Total de gastos pagados</p>
-        </CardContent>
-      </Card>
-      <Card className="xl:col-span-1">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Ahorros del Período</CardTitle>
-          <PiggyBank className="h-4 w-4 text-blue-500" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-blue-500">
-            {formatCurrency(periodSavings)}
-          </div>
-          <p className="text-xs text-muted-foreground">Suma de tus aportes a ahorros este mes.</p>
         </CardContent>
       </Card>
        <Card className="xl:col-span-1">
