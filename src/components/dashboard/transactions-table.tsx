@@ -93,6 +93,7 @@ export function TransactionsTable() {
                       {formatCurrency(t.amount)}
                     </TableCell>
                     <TableCell>
+                      {t.id !== 'initial-balance' && (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button aria-haspopup="true" size="icon" variant="ghost">
@@ -111,6 +112,7 @@ export function TransactionsTable() {
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))
@@ -137,7 +139,7 @@ export function TransactionsTable() {
       <AlertDialog open={!!deletingTransactionId} onOpenChange={(isOpen) => !isOpen && setDeletingTransactionId(null)}>
         <AlertDialogContent>
             <AlertDialogHeader>
-            <AlertDialogTitle>¿Estás absolutamente seguro?</AlertDialogTitle>
+            <AlertDialogTitle>¿Estás absolutely seguro?</AlertDialogTitle>
             <AlertDialogDescription>
                 Esta acción no se puede deshacer. Esto eliminará permanentemente esta transacción.
             </AlertDialogDescription>

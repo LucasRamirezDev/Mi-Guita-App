@@ -14,7 +14,8 @@ export function BalanceCards() {
     let income = 0;
     let expenses = 0;
     let savings = 0;
-    for (const t of transactions) {
+    // We exclude the initialBalance from the income calculation here, as it's already part of the transactions
+    for (const t of transactions.filter(t => t.id !== 'initial-balance')) {
       if (t.type === "income") {
         income += t.amount;
       } else {
@@ -26,8 +27,12 @@ export function BalanceCards() {
     }
     return { totalIncome: income, totalExpenses: expenses, periodSavings: savings };
   }, [transactions]);
+  
+  const totalIncomeWithInitial = transactions
+    .filter(t => t.type === 'income')
+    .reduce((acc, t) => acc + t.amount, 0);
 
-  const currentBalance = initialBalance + totalIncome - totalExpenses;
+  const currentBalance = totalIncomeWithInitial - totalExpenses;
 
   return (
     <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 xl:grid-cols-5">
@@ -50,7 +55,7 @@ export function BalanceCards() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-green-500">
-            {formatCurrency(totalIncome)}
+            {formatCurrency(totalIncomeWithInitial)}
           </div>
           <p className="text-xs text-muted-foreground">Total de ingresos recibidos</p>
         </CardContent>

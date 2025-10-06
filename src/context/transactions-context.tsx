@@ -1,8 +1,8 @@
 
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { type Transaction, mockTransactions } from "@/lib/data";
+import React, { createContext, useContext, useState, ReactNode, useMemo } from "react";
+import { type Transaction, mockTransactions, Category } from "@/lib/data";
 import { useToast } from "@/hooks/use-toast";
 
 interface TransactionsContextType {
@@ -19,14 +19,27 @@ const TransactionsContext = createContext<TransactionsContextType | undefined>(
 );
 
 export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
-  const [transactions, setTransactions] = useState<Transaction[]>(mockTransactions);
+  const [userTransactions, setUserTransactions] = useState<Transaction[]>(mockTransactions);
   const initialBalance = 200000;
   const totalAccumulatedSavings = 250000;
   const { toast } = useToast();
 
+  const transactions = useMemo(() => {
+    const previousBalanceTransaction: Transaction = {
+      id: "initial-balance",
+      date: new Date(new Date().getFullYear(), new Date().getMonth(), 1), // First day of current month
+      description: "Saldo del mes anterior",
+      amount: initialBalance,
+      type: "income",
+      category: "Ingresos",
+    };
+    return [previousBalanceTransaction, ...userTransactions].sort((a, b) => b.date.getTime() - a.date.getTime());
+  }, [userTransactions, initialBalance]);
+
+
   const addTransaction = (transaction: Omit<Transaction, "id">) => {
     const newTransaction = { ...transaction, id: crypto.randomUUID() };
-    setTransactions((prev) => [newTransaction, ...prev].sort((a, b) => b.date.getTime() - a.date.getTime()));
+    setUserTransactions((prev) => [...prev, newTransaction]);
     toast({
       title: "Transacción Añadida",
       description: `Se añadió "${newTransaction.description}" correctamente.`,
@@ -34,9 +47,8 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateTransaction = (updatedTransaction: Transaction) => {
-    setTransactions((prev) =>
+    setUserTransactions((prev) =>
       prev.map((t) => (t.id === updatedTransaction.id ? updatedTransaction : t))
-      .sort((a, b) => b.date.getTime() - a.date.getTime())
     );
      toast({
       title: "Transacción Actualizada",
@@ -46,7 +58,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
 
   const deleteTransaction = (id: string) => {
     const transactionToDelete = transactions.find(t => t.id === id);
-    setTransactions((prev) => prev.filter((t) => t.id !== id));
+    setUserTransactions((prev) => prev.filter((t) => t.id !== id));
     if (transactionToDelete) {
         toast({
             title: "Transacción Eliminada",
