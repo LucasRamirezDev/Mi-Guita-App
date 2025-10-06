@@ -31,7 +31,7 @@ export function FinancialAnalysis({ transactions }: FinancialAnalysisProps) {
       setAnalysis(result);
     } catch (e) {
       console.error(e);
-      setError("me dice que hubo un error al generar el analisis");
+      setError("Hubo un error al generar el análisis. Inténtalo de nuevo.");
     } finally {
       setIsLoading(false);
     }
