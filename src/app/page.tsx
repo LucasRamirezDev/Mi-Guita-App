@@ -1,6 +1,8 @@
+
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { LoginForm } from "@/components/auth/login-form";
 import { MiGuitaLogo } from "@/components/icons";
 import {
@@ -55,6 +57,19 @@ export default function Home() {
                 <LoginForm />
             </CardContent>
             </Card>
+        </motion.div>
+        <motion.div variants={itemVariants} className="text-center text-xs text-gray-500 dark:text-gray-400">
+            <p>
+                © 2025 Diseñado por{' '}
+                <Link
+                    href="https://www.lucasramirez.dev"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline hover:text-primary"
+                >
+                    Lucas®
+                </Link>
+            </p>
         </motion.div>
       </div>
     </motion.main>
