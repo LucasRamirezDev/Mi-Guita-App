@@ -46,7 +46,7 @@ export default function Home() {
             Bienvenido a Mi Guita
           </h1>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Inicia sesión para administrar tus finanzas.
+            Toma el control de tu dinero. Organiza tus finanzas hoy.
           </p>
         </motion.div>
         <motion.div variants={itemVariants}>
