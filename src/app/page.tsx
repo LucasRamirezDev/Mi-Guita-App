@@ -65,7 +65,7 @@ export default function Home() {
                     href="https://www.lucasramirez.dev"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-semibold underline hover:text-primary"
+                    className="font-semibold hover:text-primary"
                 >
                     Lucas®
                 </Link>
@@ -75,3 +75,4 @@ export default function Home() {
     </motion.main>
   );
 }
+
