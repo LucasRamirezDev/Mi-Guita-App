@@ -19,7 +19,7 @@ const TransactionsContext = createContext<TransactionsContextType | undefined>(
 
 export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [transactions, setTransactions] = useState<Transaction[]>(mockTransactions);
-  const initialBalance = 5500;
+  const initialBalance = 450000;
   const { toast } = useToast();
 
   const addTransaction = (transaction: Omit<Transaction, "id">) => {
