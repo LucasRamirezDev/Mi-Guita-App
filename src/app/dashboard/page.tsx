@@ -146,7 +146,7 @@ export default function DashboardPage() {
                 </motion.div>
             </motion.div>
           </div>
-        </main>
+        </motion.main>
       </div>
       <AddTransactionDialog
         isOpen={isAddDialogOpen}
