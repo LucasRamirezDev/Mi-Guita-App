@@ -50,7 +50,7 @@ export default function Home() {
             </h1>
           </div>
           <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
-            Toma el control de tu dinero.
+            Toma el control de tu dinero. Organiza tus finanzas a partir de hoy.
           </p>
         </motion.div>
         <motion.div variants={itemVariants}>
