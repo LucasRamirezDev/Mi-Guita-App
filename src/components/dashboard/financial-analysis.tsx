@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from 'react';
@@ -30,7 +31,7 @@ export function FinancialAnalysis({ transactions }: FinancialAnalysisProps) {
       setAnalysis(result);
     } catch (e) {
       console.error(e);
-      setError("Hubo un error al generar el análisis. Inténtalo de nuevo.");
+      setError("me dice que hubo un error al generar el analisis");
     } finally {
       setIsLoading(false);
     }
