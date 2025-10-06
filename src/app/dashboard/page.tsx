@@ -161,7 +161,7 @@ export default function DashboardPage() {
       />
       <ManageGoalsDialog
         isOpen={isManageGoalsOpen}
-        onOpenchaNGE={setIsManageGoalsOpen}
+        onOpenChange={setIsManageGoalsOpen}
       />
     </>
   );
