@@ -20,7 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BudgetFlowLogo } from "@/components/icons";
+import { MiGuitaLogo } from "@/components/icons";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -36,8 +36,8 @@ export function DashboardHeader({ onAddTransaction, isBalanceVisible, onToggleBa
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
-        <BudgetFlowLogo className="h-6 w-6" />
-        <span className="">BudgetFlow</span>
+        <MiGuitaLogo className="h-6 w-6" />
+        <span className="">Mi Guita</span>
       </Link>
       <div className="ml-auto flex items-center gap-2 md:gap-4">
         <Button size="sm" className="h-8 gap-1" onClick={onAddTransaction}>

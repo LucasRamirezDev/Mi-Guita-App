@@ -3,9 +3,9 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'BudgetFlow | Tu Asistente Financiero',
-  description: 'BudgetFlow te ayuda a administrar tus gastos e ingresos mensuales con facilidad. Toma el control de tus finanzas personales con nuestro panel intuitivo.',
-  keywords: ['presupuesto', 'finanzas', 'gastos', 'ingresos', 'ahorros', 'administrador de dinero'],
+  title: 'Mi Guita | Tu Asistente Financiero',
+  description: 'Mi Guita te ayuda a administrar tus gastos e ingresos mensuales con facilidad. Toma el control de tus finanzas personales con nuestro panel intuitivo.',
+  keywords: ['presupuesto', 'finanzas', 'gastos', 'ingresos', 'ahorros', 'administrador de dinero', 'guita', 'plata'],
 };
 
 export default function RootLayout({
