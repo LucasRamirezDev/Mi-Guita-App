@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
 import { TransactionFilters } from "@/components/dashboard/transaction-filters";
 import { type Transaction } from "@/lib/data";
+import { SavingsGoals } from "@/components/dashboard/savings-goals";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -105,6 +106,9 @@ export default function DashboardPage() {
               className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-1"
               variants={containerVariants}
             >
+                <motion.div variants={itemVariants}>
+                  <SavingsGoals />
+                </motion.div>
                 <motion.div variants={itemVariants}>
                   <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
