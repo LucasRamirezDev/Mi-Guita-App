@@ -43,12 +43,14 @@ export default function Home() {
     >
       <div className="w-full max-w-sm space-y-6">
         <motion.div className="text-center" variants={itemVariants}>
-          <MiGuitaLogo className="mx-auto h-16 w-16 text-primary" />
-          <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-50">
-            Bienvenido a Mi Guita
-          </h1>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Toma el control de tu dinero. Organiza tus finanzas hoy.
+          <div className="flex justify-center items-center gap-3">
+            <MiGuitaLogo className="h-12 w-12 text-primary" />
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-50">
+              Mi Guita
+            </h1>
+          </div>
+          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+            Toma el control de tu dinero.
           </p>
         </motion.div>
         <motion.div variants={itemVariants}>
@@ -75,4 +77,3 @@ export default function Home() {
     </motion.main>
   );
 }
-
