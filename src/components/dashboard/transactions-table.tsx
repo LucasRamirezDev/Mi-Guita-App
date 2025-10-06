@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { MoreHorizontal, Edit, Trash2, FileDown } from "lucide-react";
@@ -63,10 +63,45 @@ type TransactionsTableProps = {
   transactions: Transaction[];
 };
 
-export function TransactionsTable({ transactions }: TransactionsTableProps) {
-  const { deleteTransaction } = useTransactions();
+export function TransactionsTable({ transactions: filteredTransactions }: TransactionsTableProps) {
+  const { deleteTransaction, transactions, initialBalance, totalAccumulatedSavings } = useTransactions();
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   const [deletingTransactionId, setDeletingTransactionId] = useState<string | null>(null);
+  
+  const balanceData = useMemo(() => {
+    let income = 0;
+    let expenses = 0;
+    let savings = 0;
+    
+    const currentMonth = new Date("2025/07/01").getMonth();
+    const currentYear = new Date("2025/07/01").getFullYear();
+
+    for (const t of transactions.filter(t => t.id !== 'initial-balance')) {
+      const transactionDate = new Date(t.date);
+      const isCurrentPeriod = transactionDate.getMonth() === currentMonth && transactionDate.getFullYear() === currentYear;
+      
+      if (!isCurrentPeriod) continue;
+
+      if (t.type === "income") {
+        income += t.amount;
+      } else { // expense
+        expenses += t.amount;
+        if (t.category === "Ahorros") {
+          savings += t.amount;
+        }
+      }
+    }
+    const totalIncomeWithInitial = initialBalance + income;
+    const currentBalance = totalIncomeWithInitial - expenses;
+
+    return { 
+        totalIncome: income, 
+        totalExpenses: expenses, 
+        periodSavings: savings,
+        currentBalance,
+        totalSavings: totalAccumulatedSavings + savings,
+    };
+  }, [transactions, initialBalance, totalAccumulatedSavings]);
 
   const handleDelete = () => {
     if (deletingTransactionId) {
@@ -79,25 +114,49 @@ export function TransactionsTable({ transactions }: TransactionsTableProps) {
     const doc = new jsPDF();
     
     doc.setFontSize(18);
-    doc.text("Resumen de Transacciones", 14, 22);
+    doc.text("Resumen Financiero - Mi Guita", 14, 22);
+    doc.setFontSize(11);
+    doc.setTextColor(100);
+    doc.text(`Período: Julio 2025`, 14, 28);
+
+
+    const balanceSummary = [
+        ["Saldo Anterior", formatCurrency(initialBalance)],
+        ["Ingresos del Mes", formatCurrency(balanceData.totalIncome)],
+        ["Gastos del Mes", formatCurrency(balanceData.totalExpenses)],
+        ["Ahorro General Total", formatCurrency(balanceData.totalSavings)],
+        [{ content: "Saldo Actual", styles: { fontStyle: 'bold' } }, { content: formatCurrency(balanceData.currentBalance), styles: { fontStyle: 'bold' } }],
+    ];
 
     autoTable(doc, {
-      startY: 30,
+        startY: 36,
+        head: [['Concepto', 'Monto']],
+        body: balanceSummary,
+        theme: 'striped',
+        headStyles: { fillColor: [41, 128, 185] },
+        columnStyles: { 1: { halign: 'right' } },
+        didDrawPage: (data) => {
+            data.settings.margin.top = 20
+        }
+    });
+
+    autoTable(doc, {
+      startY: (doc as any).lastAutoTable.finalY + 10,
       head: [['Descripción', 'Categoría', 'Fecha', 'Monto']],
-      body: transactions.map(t => [
+      body: filteredTransactions.map(t => [
         t.description,
         t.category,
         format(t.date, "PPP", { locale: es }),
         `${t.type === 'income' ? '+' : '-'} ${formatCurrency(t.amount)}`
       ]),
-      headStyles: { fillColor: [41, 128, 185] }, // Un color azul
+      headStyles: { fillColor: [41, 128, 185] },
       styles: { halign: 'left' },
       columnStyles: {
         3: { halign: 'right' },
       },
     });
 
-    doc.save("transacciones-mi-guita.pdf");
+    doc.save("resumen-financiero-mi-guita.pdf");
   }
 
   return (
@@ -130,8 +189,8 @@ export function TransactionsTable({ transactions }: TransactionsTableProps) {
             </TableHeader>
             <AnimatePresence>
               <TableBody>
-                {transactions.length > 0 ? (
-                  transactions.map((t, i) => (
+                {filteredTransactions.length > 0 ? (
+                  filteredTransactions.map((t, i) => (
                     <motion.tr
                       key={t.id}
                       custom={i}
