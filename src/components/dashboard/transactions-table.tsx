@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { MoreHorizontal, Edit, Trash2 } from "lucide-react";
+import { MoreHorizontal, Edit, Trash2, FileDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTransactions } from "@/context/transactions-context";
 import { type Transaction } from "@/lib/data";
@@ -37,6 +37,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { EditTransactionDialog } from "./edit-transaction-dialog";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const rowVariants = {
   hidden: { opacity: 0, y: -20 },
@@ -73,14 +75,45 @@ export function TransactionsTable({ transactions }: TransactionsTableProps) {
     }
   }
 
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    
+    doc.setFontSize(18);
+    doc.text("Resumen de Transacciones", 14, 22);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [['Descripción', 'Categoría', 'Fecha', 'Monto']],
+      body: transactions.map(t => [
+        t.description,
+        t.category,
+        format(t.date, "PPP", { locale: es }),
+        `${t.type === 'income' ? '+' : '-'} ${formatCurrency(t.amount)}`
+      ]),
+      headStyles: { fillColor: [41, 128, 185] }, // Un color azul
+      styles: { halign: 'left' },
+      columnStyles: {
+        3: { halign: 'right' },
+      },
+    });
+
+    doc.save("transacciones-mi-guita.pdf");
+  }
+
   return (
     <>
       <Card>
-        <CardHeader>
-          <CardTitle>Transacciones</CardTitle>
-          <CardDescription>
-            Una lista de tus ingresos y gastos recientes.
-          </CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Transacciones</CardTitle>
+            <CardDescription>
+              Una lista de tus ingresos y gastos recientes.
+            </CardDescription>
+          </div>
+          <Button onClick={handleExportPDF} size="sm" variant="outline">
+            <FileDown className="mr-2 h-4 w-4" />
+            Exportar a PDF
+          </Button>
         </CardHeader>
         <CardContent>
           <Table>
