@@ -2,14 +2,17 @@
 
 **Mi Guita** es un panel de control financiero diseñado para ayudarte a administrar tus gastos e ingresos mensuales con facilidad. Es una aplicación web moderna, intuitiva y completamente funcional que te permite tomar el control de tus finanzas personales.
 
-Este proyecto fue desarrollado en **menos de 4 horas** y fue **creado 100% con asistencia de Inteligencia Artificial** dentro de Firebase Studio. El objetivo fue explorar y demostrar las capacidades de la programación asistida por IA cuando se guía con peticiones claras y específicas.
+Este proyecto fue desarrollado en **menos de 12 horas** y fue **creado 100% con asistencia de Inteligencia Artificial** dentro de Firebase Studio. El objetivo fue explorar y demostrar las capacidades de la programación asistida por IA cuando se guía con peticiones claras y específicas.
 
 ## Características
 
 *   **Dashboard Intuitivo:** Visualiza tu saldo, ingresos, gastos y ahorros de un vistazo.
-*   **Gestión de Transacciones:** Añade, edita y elimina transacciones fácilmente.
-*   **Visualización de Datos:** Gráficos interactivos para entender la distribución de tus gastos y tu flujo de dinero.
-*   **Diseño Adaptable:** Interfaz optimizada para funcionar en dispositivos de escritorio y móviles.
+*   **Gestión Completa de Transacciones:** Añade, edita y elimina transacciones con un formulario intuitivo.
+*   **Metas de Ahorro:** Crea y gestiona metas de ahorro personales, y asigna transacciones a ellas para ver tu progreso.
+*   **Visualización de Datos:** Gráficos interactivos para entender la distribución de tus gastos por categoría y tu flujo general de ingresos vs. gastos.
+*   **Filtros y Búsqueda:** Filtra fácilmente tus transacciones por tipo, categoría o descripción para encontrar lo que buscas.
+*   **Exportación a PDF:** Genera un reporte en PDF de tu resumen financiero y tus transacciones con un solo clic.
+*   **Diseño Adaptable:** Interfaz optimizada para funcionar fluidamente en dispositivos de escritorio y móviles.
 *   **Tema Claro y Oscuro:** Cambia entre modos para tu comodidad visual.
 
 ## Tecnologías Utilizadas
@@ -18,9 +21,9 @@ Este proyecto fue construido utilizando un stack de tecnologías moderno y robus
 
 *   **Framework:** [Next.js](https://nextjs.org/) (con App Router)
 *   **Lenguaje:** [TypeScript](https://www.typescriptlang.org/)
-*   **UI/Componentes:** [React](https://reactjs.org/), [ShadCN UI](https://ui.shadcn.com/)
+*   **UI/Componentes:** [React](https://reactjs.org/), [ShadCN UI](https://ui.shadcn.com/), [Framer Motion](https://www.framer.com/motion/)
 *   **Estilos:** [Tailwind CSS](https://tailwindcss.com/)
-*   **Funcionalidad AI:** [Google Genkit](https://firebase.google.com/docs/genkit)
+*   **Gráficos:** [Recharts](https://recharts.org/)
 *   **Iconos:** [Lucide React](https://lucide.dev/)
 
 ## Despliegue
