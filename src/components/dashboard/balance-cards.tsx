@@ -8,9 +8,9 @@ import { useTransactions } from "@/context/transactions-context";
 import { formatCurrency } from "@/lib/utils";
 
 export function BalanceCards() {
-  const { transactions, initialBalance } = useTransactions();
+  const { transactions, initialBalance, totalAccumulatedSavings } = useTransactions();
 
-  const { totalIncome, totalExpenses, totalSavings } = useMemo(() => {
+  const { totalIncome, totalExpenses, periodSavings } = useMemo(() => {
     let income = 0;
     let expenses = 0;
     let savings = 0;
@@ -24,14 +24,14 @@ export function BalanceCards() {
         }
       }
     }
-    return { totalIncome: income, totalExpenses: expenses, totalSavings: savings };
+    return { totalIncome: income, totalExpenses: expenses, periodSavings: savings };
   }, [transactions]);
 
   const currentBalance = initialBalance + totalIncome - totalExpenses;
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-5">
-      <Card>
+    <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3 xl:grid-cols-6">
+      <Card className="xl:col-span-1">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Saldo del Mes Anterior</CardTitle>
           <Wallet className="h-4 w-4 text-muted-foreground" />
@@ -43,7 +43,7 @@ export function BalanceCards() {
           <p className="text-xs text-muted-foreground">Dinero disponible al iniciar el período.</p>
         </CardContent>
       </Card>
-      <Card>
+      <Card className="xl:col-span-1">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Ingresos Totales</CardTitle>
           <ArrowUpCircle className="h-4 w-4 text-green-500" />
@@ -55,7 +55,7 @@ export function BalanceCards() {
           <p className="text-xs text-muted-foreground">Total de ingresos recibidos</p>
         </CardContent>
       </Card>
-      <Card>
+      <Card className="xl:col-span-1">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Gastos Totales</CardTitle>
           <ArrowDownCircle className="h-4 w-4 text-red-500" />
@@ -67,19 +67,31 @@ export function BalanceCards() {
           <p className="text-xs text-muted-foreground">Total de gastos pagados</p>
         </CardContent>
       </Card>
-      <Card>
+      <Card className="xl:col-span-1">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Ahorros del Período</CardTitle>
-          <PiggyBank className="h-4 w-4 text-muted-foreground" />
+          <PiggyBank className="h-4 w-4 text-blue-500" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold text-blue-500">
+            {formatCurrency(periodSavings)}
+          </div>
+          <p className="text-xs text-muted-foreground">Suma de tus aportes a ahorros este mes.</p>
+        </CardContent>
+      </Card>
+       <Card className="xl:col-span-1">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">Ahorros Totales</CardTitle>
+          <Landmark className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {formatCurrency(totalSavings)}
+            {formatCurrency(totalAccumulatedSavings + periodSavings)}
           </div>
-          <p className="text-xs text-muted-foreground">Suma de tus aportes a ahorros.</p>
+          <p className="text-xs text-muted-foreground">Tu fondo de ahorro total.</p>
         </CardContent>
       </Card>
-      <Card className="bg-primary/10 border-primary">
+      <Card className="bg-primary/10 border-primary xl:col-span-1">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Saldo Actual</CardTitle>
           <DollarSign className="h-4 w-4 text-primary" />

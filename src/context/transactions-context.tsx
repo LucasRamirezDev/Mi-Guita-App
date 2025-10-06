@@ -11,6 +11,7 @@ interface TransactionsContextType {
   updateTransaction: (transaction: Transaction) => void;
   deleteTransaction: (id: string) => void;
   initialBalance: number;
+  totalAccumulatedSavings: number;
 }
 
 const TransactionsContext = createContext<TransactionsContextType | undefined>(
@@ -19,7 +20,8 @@ const TransactionsContext = createContext<TransactionsContextType | undefined>(
 
 export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [transactions, setTransactions] = useState<Transaction[]>(mockTransactions);
-  const initialBalance = 450000;
+  const initialBalance = 200000;
+  const totalAccumulatedSavings = 250000;
   const { toast } = useToast();
 
   const addTransaction = (transaction: Omit<Transaction, "id">) => {
@@ -62,6 +64,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         updateTransaction,
         deleteTransaction,
         initialBalance,
+        totalAccumulatedSavings,
       }}
     >
       {children}
