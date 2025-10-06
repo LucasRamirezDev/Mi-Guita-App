@@ -2,7 +2,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode, useMemo } from "react";
-import { type Transaction, mockTransactions, Category, savingsGoals, type SavingsGoal } from "@/lib/data";
+import { type Transaction, mockTransactions, Category, type SavingsGoal } from "@/lib/data";
 import { useToast } from "@/hooks/use-toast";
 
 interface TransactionsContextType {
@@ -13,17 +13,25 @@ interface TransactionsContextType {
   initialBalance: number;
   totalAccumulatedSavings: number;
   allSavingsGoals: SavingsGoal[];
+  addGoal: (goal: Omit<SavingsGoal, "id" | "accumulated">) => void;
+  deleteGoal: (id: string) => void;
 }
 
 const TransactionsContext = createContext<TransactionsContextType | undefined>(
   undefined
 );
 
+const initialGoals: SavingsGoal[] = [
+    { id: "goal-1", name: "Vacaciones en la Costa", target: 1000000, accumulated: 520000 },
+    { id: "goal-2", name: "Renovar PC", target: 800000, accumulated: 150000 },
+];
+
 export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [userTransactions, setUserTransactions] = useState<Transaction[]>(mockTransactions);
+  const [savingsGoals, setSavingsGoals] = useState<SavingsGoal[]>(initialGoals);
+
   const initialBalance = 200000;
   const totalAccumulatedSavings = 250000;
-  const allSavingsGoals = savingsGoals;
   const { toast } = useToast();
 
   const transactions = useMemo(() => {
@@ -70,6 +78,31 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const addGoal = (goal: Omit<SavingsGoal, "id" | "accumulated">) => {
+    const newGoal: SavingsGoal = {
+      ...goal,
+      id: crypto.randomUUID(),
+      accumulated: 0,
+    };
+    setSavingsGoals((prev) => [...prev, newGoal]);
+    toast({
+      title: "Meta Creada",
+      description: `Se creó la meta "${newGoal.name}" correctamente.`,
+    });
+  };
+
+  const deleteGoal = (id: string) => {
+    const goalToDelete = savingsGoals.find(g => g.id === id);
+    setSavingsGoals((prev) => prev.filter((g) => g.id !== id));
+    if (goalToDelete) {
+      toast({
+        title: "Meta Finalizada",
+        description: `¡Felicidades! Finalizaste la meta "${goalToDelete.name}".`,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <TransactionsContext.Provider
       value={{
@@ -79,7 +112,9 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         deleteTransaction,
         initialBalance,
         totalAccumulatedSavings,
-        allSavingsGoals,
+        allSavingsGoals: savingsGoals,
+        addGoal,
+        deleteGoal,
       }}
     >
       {children}

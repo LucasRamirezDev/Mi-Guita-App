@@ -31,11 +31,6 @@ export type SavingsGoal = {
   accumulated: number;
 };
 
-export const savingsGoals: SavingsGoal[] = [
-    { id: "goal-1", name: "Vacaciones en la Costa", target: 1000000, accumulated: 520000 },
-    { id: "goal-2", name: "Renovar PC", target: 800000, accumulated: 150000 },
-];
-
 export const mockTransactions: Transaction[] = [
   { id: "1", date: new Date("2025/07/01"), description: "Salario", amount: 1850000, type: "income", category: "Ingresos" },
   { id: "2", date: new Date("2025/07/01"), description: "Alquiler", amount: 350000, type: "expense", category: "Vivienda" },

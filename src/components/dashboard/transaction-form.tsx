@@ -9,7 +9,7 @@ import { es } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { categories, Category, savingsGoals } from "@/lib/data";
+import { categories } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -35,6 +35,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useTransactions } from "@/context/transactions-context";
 
 const formSchema = z.object({
   description: z.string().min(2, {
@@ -73,6 +74,7 @@ type TransactionFormProps = {
 };
 
 export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProps) {
+  const { allSavingsGoals } = useTransactions();
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues || {
@@ -206,7 +208,7 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {savingsGoals.map((goal) => (
+                    {allSavingsGoals.map((goal) => (
                       <SelectItem key={goal.id} value={goal.id}>
                         {goal.name}
                       </SelectItem>

@@ -16,6 +16,7 @@ import { formatCurrency } from "@/lib/utils";
 import { TransactionFilters } from "@/components/dashboard/transaction-filters";
 import { type Transaction } from "@/lib/data";
 import { SavingsGoals } from "@/components/dashboard/savings-goals";
+import { ManageGoalsDialog } from "@/components/dashboard/manage-goals-dialog";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -46,6 +47,7 @@ export type Filters = {
 
 export default function DashboardPage() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [isManageGoalsOpen, setIsManageGoalsOpen] = useState(false);
   const { transactions } = useTransactions();
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
   const [filters, setFilters] = useState<Filters>({
@@ -98,6 +100,7 @@ export default function DashboardPage() {
       <div className="flex min-h-screen w-full flex-col">
         <DashboardHeader 
           onAddTransaction={() => setIsAddDialogOpen(true)}
+          onManageGoals={() => setIsManageGoalsOpen(true)}
           isBalanceVisible={isBalanceVisible}
           onToggleBalanceVisibility={toggleBalanceVisibility}
         />
@@ -151,6 +154,10 @@ export default function DashboardPage() {
       <AddTransactionDialog
         isOpen={isAddDialogOpen}
         onOpenChange={setIsAddDialogOpen}
+      />
+      <ManageGoalsDialog
+        isOpen={isManageGoalsOpen}
+        onOpenChange={setIsManageGoalsOpen}
       />
     </>
   );

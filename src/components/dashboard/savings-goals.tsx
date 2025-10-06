@@ -45,6 +45,24 @@ const GoalCard = ({ goal }: { goal: SavingsGoal }) => {
 export function SavingsGoals() {
   const { allSavingsGoals } = useTransactions();
 
+  if (allSavingsGoals.length === 0) {
+    return (
+        <Card>
+            <CardHeader>
+                <div className="flex items-center justify-between">
+                    <CardTitle>Metas de Ahorro</CardTitle>
+                    <Target className="h-5 w-5 text-primary" />
+                </div>
+                <CardDescription>Tu progreso para alcanzar tus objetivos financieros.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <p className="text-sm text-muted-foreground">No has creado ninguna meta todavía.</p>
+                <p className="text-sm text-muted-foreground mt-2">Usa el botón "Gestionar Metas" para empezar.</p>
+            </CardContent>
+        </Card>
+    );
+  }
+
   return (
     <Card>
       <CardHeader>

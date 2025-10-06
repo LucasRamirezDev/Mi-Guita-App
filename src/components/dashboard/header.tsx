@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   LogOut,
   PlusCircle,
   User,
   Eye,
   EyeOff,
+  Target,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -27,11 +27,12 @@ import { ThemeToggle } from "../theme-toggle";
 
 type DashboardHeaderProps = {
   onAddTransaction: () => void;
+  onManageGoals: () => void;
   isBalanceVisible: boolean;
   onToggleBalanceVisibility: () => void;
 };
 
-export function DashboardHeader({ onAddTransaction, isBalanceVisible, onToggleBalanceVisibility }: DashboardHeaderProps) {
+export function DashboardHeader({ onAddTransaction, onManageGoals, isBalanceVisible, onToggleBalanceVisibility }: DashboardHeaderProps) {
   const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar');
 
   return (
@@ -41,6 +42,12 @@ export function DashboardHeader({ onAddTransaction, isBalanceVisible, onToggleBa
         <span className="">Mi Guita</span>
       </Link>
       <div className="ml-auto flex items-center gap-2 md:gap-4">
+        <Button size="sm" variant="outline" className="h-8 gap-1" onClick={onManageGoals}>
+          <Target className="h-3.5 w-3.5" />
+          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+            Gestionar Metas
+          </span>
+        </Button>
         <Button size="sm" className="h-8 gap-1" onClick={onAddTransaction}>
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
