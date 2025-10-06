@@ -36,7 +36,7 @@ export function DashboardHeader({ onAddTransaction, onManageGoals, isBalanceVisi
   const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar');
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 pt-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
         <MiGuitaLogo className="h-6 w-6" />
         <span className="">Mi Guita</span>
