@@ -2,7 +2,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { ArrowDownCircle, ArrowUpCircle, DollarSign, PiggyBank, Landmark } from "lucide-react";
+import { ArrowDownCircle, ArrowUpCircle, DollarSign, PiggyBank, Landmark, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTransactions } from "@/context/transactions-context";
 import { formatCurrency } from "@/lib/utils";
@@ -33,14 +33,14 @@ export function BalanceCards() {
     <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-5">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Fondo de Reserva</CardTitle>
-          <PiggyBank className="h-4 w-4 text-muted-foreground" />
+          <CardTitle className="text-sm font-medium">Saldo del Mes Anterior</CardTitle>
+          <Wallet className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
             {formatCurrency(initialBalance)}
           </div>
-          <p className="text-xs text-muted-foreground">Tu fondo de ahorro para este período.</p>
+          <p className="text-xs text-muted-foreground">Dinero disponible al iniciar el período.</p>
         </CardContent>
       </Card>
       <Card>
@@ -70,7 +70,7 @@ export function BalanceCards() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Ahorros del Período</CardTitle>
-          <Landmark className="h-4 w-4 text-muted-foreground" />
+          <PiggyBank className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
