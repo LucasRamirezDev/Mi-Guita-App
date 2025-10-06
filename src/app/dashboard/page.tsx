@@ -116,14 +116,11 @@ export default function DashboardPage() {
            <motion.div variants={itemVariants}>
             <TransactionFilters onFiltersChange={setFilters} />
           </motion.div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
             <motion.div className="lg:col-span-2" variants={itemVariants}>
               <TransactionsTable transactions={filteredTransactions} />
             </motion.div>
-            <motion.div 
-              className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-1"
-              variants={containerVariants}
-            >
+            <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-1">
                 <motion.div variants={itemVariants}>
                   <SavingsGoals />
                 </motion.div>
@@ -147,7 +144,7 @@ export default function DashboardPage() {
                 <motion.div variants={itemVariants}>
                   <OverviewChart />
                 </motion.div>
-            </motion.div>
+            </div>
           </div>
         </motion.main>
       </div>
