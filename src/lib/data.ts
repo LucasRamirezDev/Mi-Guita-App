@@ -16,6 +16,7 @@ export const categories = [
   "Salud",
   "Compras",
   "Ahorros",
+  "Metas",
   "Ingresos",
   "Otros",
 ] as const;
@@ -36,4 +37,3 @@ export const mockTransactions: Transaction[] = [
   { id: "10", date: new Date("2025/07/11"), description: "Factura de internet y cable", amount: 58000, type: "expense", category: "Vivienda" },
   { id: "11", date: new Date("2025/07/13"), description: "Venta de item usado", amount: 45000, type: "income", category: "Ingresos" },
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
-

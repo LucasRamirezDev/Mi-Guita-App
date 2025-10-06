@@ -12,6 +12,7 @@ interface TransactionsContextType {
   deleteTransaction: (id: string) => void;
   initialBalance: number;
   totalAccumulatedSavings: number;
+  totalAccumulatedGoals: number;
 }
 
 const TransactionsContext = createContext<TransactionsContextType | undefined>(
@@ -22,6 +23,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [userTransactions, setUserTransactions] = useState<Transaction[]>(mockTransactions);
   const initialBalance = 200000;
   const totalAccumulatedSavings = 250000;
+  const totalAccumulatedGoals = 520000; // 100k + 70k + 120k + 180k + 50k
   const { toast } = useToast();
 
   const transactions = useMemo(() => {
@@ -77,6 +79,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         deleteTransaction,
         initialBalance,
         totalAccumulatedSavings,
+        totalAccumulatedGoals,
       }}
     >
       {children}

@@ -1,16 +1,13 @@
 
 "use client";
 
-import { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowDownCircle, ArrowUpCircle, DollarSign, Landmark, Wallet } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowDownCircle, ArrowUpCircle, DollarSign, Landmark, Wallet, PiggyBank, Target } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useTransactions } from "@/context/transactions-context";
 import { formatCurrency } from "@/lib/utils";
-
-type BalanceCardsProps = {
-  isBalanceVisible: boolean;
-};
 
 const cardVariants = {
   hidden: { y: 20, opacity: 0 },
@@ -23,42 +20,77 @@ const cardVariants = {
   },
 };
 
-export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
-  const { transactions, initialBalance, totalAccumulatedSavings } = useTransactions();
+type BalanceCardsProps = {
+  isBalanceVisible: boolean;
+};
 
-  const { totalIncome, totalExpenses, periodSavings } = useMemo(() => {
+export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
+  const { transactions, initialBalance, totalAccumulatedSavings, totalAccumulatedGoals } = useTransactions();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const { totalIncome, totalExpenses, periodSavings, periodGoals } = useMemo(() => {
     let income = 0;
     let expenses = 0;
     let savings = 0;
+    let goals = 0;
     
+    const currentMonth = new Date("2025/07/01").getMonth();
+    const currentYear = new Date("2025/07/01").getFullYear();
+
     for (const t of transactions.filter(t => t.id !== 'initial-balance')) {
+      const transactionDate = new Date(t.date);
+      const isCurrentPeriod = transactionDate.getMonth() === currentMonth && transactionDate.getFullYear() === currentYear;
+      
+      if (!isCurrentPeriod) continue;
+
       if (t.type === "income") {
         income += t.amount;
-      } else {
+      } else { // expense
         expenses += t.amount;
         if (t.category === "Ahorros") {
           savings += t.amount;
+        } else if (t.category === "Metas") {
+          goals += t.amount;
         }
       }
     }
-    return { totalIncome: income, totalExpenses: expenses, periodSavings: savings };
+    return { totalIncome: income, totalExpenses: expenses, periodSavings: savings, periodGoals: goals };
   }, [transactions]);
   
-  const totalIncomeWithInitial = transactions
-    .filter(t => t.type === 'income')
-    .reduce((acc, t) => acc + t.amount, 0);
-
+  const totalIncomeWithInitial = initialBalance + totalIncome;
   const currentBalance = totalIncomeWithInitial - totalExpenses;
   
   const balancePlaceholder = "•••••";
 
   const cards = [
-    { title: "Saldo del Mes Anterior", value: initialBalance, icon: Wallet, color: "", description: "Dinero disponible al iniciar el período." },
-    { title: "Ingresos Totales", value: totalIncomeWithInitial, icon: ArrowUpCircle, color: "text-green-500", description: "Total de ingresos recibidos" },
-    { title: "Gastos Totales", value: totalExpenses, icon: ArrowDownCircle, color: "text-red-500", description: "Total de gastos pagados" },
-    { title: "Saldo Actual", value: currentBalance, icon: DollarSign, color: "text-primary", description: "Tu resumen financiero", highlight: true },
-    { title: "Ahorros Totales", value: totalAccumulatedSavings + periodSavings, icon: Landmark, color: "", description: "Tu fondo de ahorro total." },
+    { title: "Saldo Anterior", value: initialBalance, icon: Wallet, color: "", description: "Dinero disponible al iniciar." },
+    { title: "Ingresos del Mes", value: totalIncome, icon: ArrowUpCircle, color: "text-green-500", description: "Total de ingresos recibidos." },
+    { title: "Gastos del Mes", value: totalExpenses, icon: ArrowDownCircle, color: "text-red-500", description: "Total de gastos y ahorros." },
+    { title: "Saldo Actual", value: currentBalance, icon: DollarSign, color: "text-primary", description: "Tu resumen financiero.", highlight: true },
+    { title: "Ahorro General Total", value: totalAccumulatedSavings + periodSavings, icon: PiggyBank, color: "", description: "Tu fondo de ahorro general." },
   ];
+
+  if (!isMounted) {
+    return (
+      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        {[...Array(5)].map((_, i) => (
+          <Card key={i}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <Skeleton className="h-4 w-3/4" />
+            </CardHeader>
+            <CardContent>
+              <Skeleton className="h-7 w-1/2" />
+              <Skeleton className="mt-2 h-3 w-full" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">

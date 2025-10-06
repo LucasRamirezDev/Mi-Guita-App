@@ -64,9 +64,17 @@ export default function DashboardPage() {
   }, [transactions]);
 
   const filteredTransactions = useMemo(() => {
+    const currentMonth = new Date("2025/07/01").getMonth();
+    const currentYear = new Date("2025/07/01").getFullYear();
+
     return transactions.filter(t => {
       const { query, type, category } = filters;
-      if (t.id === 'initial-balance') return false; // Always exclude initial balance from filtered list
+      
+      const transactionDate = new Date(t.date);
+      const isCurrentPeriod = transactionDate.getMonth() === currentMonth && transactionDate.getFullYear() === currentYear;
+
+      if (t.id === 'initial-balance') return false;
+      if (!isCurrentPeriod) return false;
 
       const queryMatch = query.trim() === '' || t.description.toLowerCase().includes(query.toLowerCase());
       const typeMatch = type === 'all' || t.type === type;

@@ -121,8 +121,11 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
                   <RadioGroup
                     onValueChange={(value) => {
                       field.onChange(value);
-                      if (value === 'income') form.setValue('category', 'Ingresos');
-                      else if (form.getValues('category') === 'Ingresos') form.setValue('category', 'Otros');
+                      if (value === 'income') {
+                        form.setValue('category', 'Ingresos');
+                      } else if (form.getValues('category') === 'Ingresos') {
+                        form.setValue('category', 'Otros');
+                      }
                     }}
                     defaultValue={field.value}
                     className="flex space-x-4"

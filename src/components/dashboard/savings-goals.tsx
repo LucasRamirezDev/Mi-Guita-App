@@ -4,7 +4,7 @@ import { useTransactions } from "@/context/transactions-context";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { formatCurrency } from "@/lib/utils";
-import { PiggyBank, Target } from "lucide-react";
+import { Target } from "lucide-react";
 import { useMemo } from "react";
 
 // For this mockup, we'll use a hardcoded goal.
@@ -14,16 +14,17 @@ const savingsGoal = {
 };
 
 export function SavingsGoals() {
-  const { transactions } = useTransactions();
+  const { transactions, totalAccumulatedGoals } = useTransactions();
 
-  const currentSavings = useMemo(() => {
+  const currentPeriodGoalsSavings = useMemo(() => {
     return transactions
-      .filter(t => t.category === "Ahorros")
+      .filter(t => t.category === "Metas")
       .reduce((acc, t) => acc + t.amount, 0);
   }, [transactions]);
   
-  const progressPercentage = (currentSavings / savingsGoal.target) * 100;
-  const remainingAmount = savingsGoal.target - currentSavings;
+  const totalSavingsForGoal = totalAccumulatedGoals + currentPeriodGoalsSavings;
+  const progressPercentage = (totalSavingsForGoal / savingsGoal.target) * 100;
+  const remainingAmount = savingsGoal.target - totalSavingsForGoal;
 
   return (
     <Card>
@@ -43,7 +44,7 @@ export function SavingsGoals() {
             <Progress value={progressPercentage} />
             <div className="flex justify-between text-sm">
                 <span className="font-medium text-primary">
-                    Ahorrado: {formatCurrency(currentSavings)}
+                    Ahorrado: {formatCurrency(totalSavingsForGoal)}
                 </span>
                  <span className="text-muted-foreground">
                     Falta: {formatCurrency(remainingAmount > 0 ? remainingAmount : 0)}
