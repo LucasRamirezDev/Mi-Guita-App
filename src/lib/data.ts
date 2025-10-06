@@ -32,7 +32,7 @@ export const mockTransactions: Transaction[] = [
   { id: "6", date: new Date("2025/07/10"), description: "Cena con amigos", amount: 25000, type: "expense", category: "Comida" },
   { id: "7", date: new Date("2025/07/12"), description: "Entradas de cine", amount: 18000, type: "expense", category: "Entretenimiento" },
   { id: "8", date: new Date("2025/07/15"), description: "Zapatillas", amount: 95000, type: "expense", category: "Compras" },
-  { id: "9", date: new Date("2025/07/20"), description: "Consulta médica", amount: 15000, type: "expense", category: "Salud" },
-  { id: "10", date: new Date("2025/07/22"), description: "Factura de internet y cable", amount: 58000, type: "expense", category: "Vivienda" },
-  { id: "11", date: new Date("2025/07/25"), description: "Venta de item usado", amount: 45000, type: "income", category: "Ingresos" },
+  { id: "9", date: new Date("2025/07/14"), description: "Consulta médica", amount: 15000, type: "expense", category: "Salud" },
+  { id: "10", date: new Date("2025/07/11"), description: "Factura de internet y cable", amount: 58000, type: "expense", category: "Vivienda" },
+  { id: "11", date: new Date("2025/07/13"), description: "Venta de item usado", amount: 45000, type: "income", category: "Ingresos" },
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
