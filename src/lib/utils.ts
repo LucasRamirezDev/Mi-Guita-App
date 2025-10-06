@@ -19,7 +19,7 @@ export function formatCurrencyShort(amount: number) {
     return `$${(amount / 1_000_000).toFixed(1).replace(/\.0$/, '')}M`;
   }
   if (Math.abs(amount) >= 1_000) {
-    return `$${(amount / 1_000).toFixed(0)}k`;
+    return `$${(amount / 1_000).toFixed(0)}Mil`;
   }
   return `$${amount}`;
 }
