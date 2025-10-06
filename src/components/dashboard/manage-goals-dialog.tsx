@@ -52,6 +52,15 @@ type ManageGoalsDialogProps = {
   onOpenChange: (isOpen: boolean) => void;
 };
 
+const formatNumber = (value: string) => {
+  const number = parseInt(value.replace(/\D/g, ""), 10);
+  return isNaN(number) ? "" : new Intl.NumberFormat("es-AR").format(number);
+};
+
+const parseNumber = (value: string) => {
+  return value.replace(/\./g, "");
+};
+
 export function ManageGoalsDialog({ isOpen, onOpenChange }: ManageGoalsDialogProps) {
   const { allSavingsGoals, addGoal, deleteGoal } = useTransactions();
   const [deletingGoalId, setDeletingGoalId] = useState<string | null>(null);
@@ -66,7 +75,7 @@ export function ManageGoalsDialog({ isOpen, onOpenChange }: ManageGoalsDialogPro
 
   const handleSubmit = (values: GoalFormValues) => {
     addGoal(values);
-    form.reset();
+    form.reset({ name: "", target: 0 });
   };
   
   const handleDeleteConfirm = () => {
@@ -137,7 +146,16 @@ export function ManageGoalsDialog({ isOpen, onOpenChange }: ManageGoalsDialogPro
                       <FormItem>
                         <FormLabel>Monto Objetivo</FormLabel>
                         <FormControl>
-                          <Input type="number" placeholder="1000000" {...field} />
+                          <Input
+                            placeholder="1.000.000"
+                            {...field}
+                             value={field.value > 0 ? formatNumber(String(field.value)) : ""}
+                             onChange={(e) => {
+                               const value = parseNumber(e.target.value);
+                               const numberValue = Number(value);
+                               field.onChange(isNaN(numberValue) ? 0 : numberValue);
+                             }}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

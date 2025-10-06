@@ -73,6 +73,15 @@ type TransactionFormProps = {
   defaultValues?: Partial<TransactionFormValues>;
 };
 
+const formatNumber = (value: string) => {
+  const number = parseInt(value.replace(/\D/g, ""), 10);
+  return isNaN(number) ? "" : new Intl.NumberFormat("es-AR").format(number);
+};
+
+const parseNumber = (value: string) => {
+  return value.replace(/\./g, "");
+};
+
 export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProps) {
   const { allSavingsGoals } = useTransactions();
   const form = useForm<TransactionFormValues>({
@@ -117,7 +126,16 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
             <FormItem>
               <FormLabel>Monto</FormLabel>
               <FormControl>
-                <Input type="number" placeholder="0.00" {...field} />
+                <Input
+                  placeholder="0"
+                  {...field}
+                  value={field.value > 0 ? formatNumber(String(field.value)) : ""}
+                  onChange={(e) => {
+                    const value = parseNumber(e.target.value);
+                    const numberValue = Number(value);
+                    field.onChange(isNaN(numberValue) ? 0 : numberValue);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
