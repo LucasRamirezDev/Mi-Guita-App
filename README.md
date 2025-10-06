@@ -57,3 +57,11 @@ Para ejecutar este proyecto en tu entorno de desarrollo local, sigue estos pasos
     ```
 
 Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver la aplicación en acción.
+
+## Contacto
+
+¡Gracias por revisar este proyecto! Fue una experiencia de aprendizaje increíble sobre el poder de la IA en el desarrollo de software. Si tienes alguna pregunta, sugerencia o simplemente quieres conectar, no dudes en contactarme.
+
+*   **LinkedIn:** [Tu Perfil de LinkedIn](https://www.linkedin.com/in/tu-usuario/)
+*   **GitHub:** [Tu Perfil de GitHub](https://github.com/tu-usuario)
+*   **Portfolio:** [Tu Sitio Web](https://tu-sitio-web.com)
