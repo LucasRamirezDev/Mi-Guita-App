@@ -6,6 +6,7 @@ export type Transaction = {
   amount: number;
   type: "income" | "expense";
   category: Category;
+  goalId?: string;
 };
 
 export const categories = [
@@ -23,6 +24,18 @@ export const categories = [
 
 export type Category = (typeof categories)[number];
 
+export type SavingsGoal = {
+  id: string;
+  name: string;
+  target: number;
+  accumulated: number;
+};
+
+export const savingsGoals: SavingsGoal[] = [
+    { id: "goal-1", name: "Vacaciones en la Costa", target: 1000000, accumulated: 520000 },
+    { id: "goal-2", name: "Renovar PC", target: 800000, accumulated: 150000 },
+];
+
 export const mockTransactions: Transaction[] = [
   { id: "1", date: new Date("2025/07/01"), description: "Salario", amount: 1850000, type: "income", category: "Ingresos" },
   { id: "2", date: new Date("2025/07/01"), description: "Alquiler", amount: 350000, type: "expense", category: "Vivienda" },
@@ -36,4 +49,6 @@ export const mockTransactions: Transaction[] = [
   { id: "9", date: new Date("2025/07/14"), description: "Consulta médica", amount: 15000, type: "expense", category: "Salud" },
   { id: "10", date: new Date("2025/07/11"), description: "Factura de internet y cable", amount: 58000, type: "expense", category: "Vivienda" },
   { id: "11", date: new Date("2025/07/13"), description: "Venta de item usado", amount: 45000, type: "income", category: "Ingresos" },
+  { id: "13", date: new Date("2025/07/18"), description: "Aporte Meta Vacaciones", amount: 100000, type: "expense", category: "Metas", goalId: "goal-1" },
+  { id: "14", date: new Date("2025/07/20"), description: "Aporte Meta PC", amount: 70000, type: "expense", category: "Metas", goalId: "goal-2" },
 ].sort((a, b) => b.date.getTime() - a.date.getTime());

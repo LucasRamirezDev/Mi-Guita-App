@@ -2,7 +2,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode, useMemo } from "react";
-import { type Transaction, mockTransactions, Category } from "@/lib/data";
+import { type Transaction, mockTransactions, Category, savingsGoals, type SavingsGoal } from "@/lib/data";
 import { useToast } from "@/hooks/use-toast";
 
 interface TransactionsContextType {
@@ -12,7 +12,7 @@ interface TransactionsContextType {
   deleteTransaction: (id: string) => void;
   initialBalance: number;
   totalAccumulatedSavings: number;
-  totalAccumulatedGoals: number;
+  allSavingsGoals: SavingsGoal[];
 }
 
 const TransactionsContext = createContext<TransactionsContextType | undefined>(
@@ -23,7 +23,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [userTransactions, setUserTransactions] = useState<Transaction[]>(mockTransactions);
   const initialBalance = 200000;
   const totalAccumulatedSavings = 250000;
-  const totalAccumulatedGoals = 520000; // 100k + 70k + 120k + 180k + 50k
+  const allSavingsGoals = savingsGoals;
   const { toast } = useToast();
 
   const transactions = useMemo(() => {
@@ -79,7 +79,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         deleteTransaction,
         initialBalance,
         totalAccumulatedSavings,
-        totalAccumulatedGoals,
+        allSavingsGoals,
       }}
     >
       {children}

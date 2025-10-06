@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useTransactions } from "@/context/transactions-context";
@@ -25,7 +26,12 @@ export function EditTransactionDialog({
   const { updateTransaction } = useTransactions();
 
   const handleSubmit = (values: TransactionFormValues) => {
-    updateTransaction({ ...values, id: transaction.id });
+    const updatedValues: Transaction = {
+      ...transaction,
+      ...values,
+      goalId: values.category === 'Metas' ? values.goalId : undefined,
+    };
+    updateTransaction(updatedValues);
     onOpenChange(false);
   };
 

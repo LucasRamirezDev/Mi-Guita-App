@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useMemo } from "react";
@@ -55,8 +56,14 @@ export default function DashboardPage() {
 
   const periodSavings = useMemo(() => {
     let savings = 0;
+    const currentMonth = new Date("2025/07/01").getMonth();
+    const currentYear = new Date("2025/07/01").getFullYear();
+
     for (const t of transactions) {
-      if (t.category === "Ahorros") {
+      const transactionDate = new Date(t.date);
+      const isCurrentPeriod = transactionDate.getMonth() === currentMonth && transactionDate.getFullYear() === currentYear;
+
+      if (isCurrentPeriod && t.category === "Ahorros") {
         savings += t.amount;
       }
     }
@@ -139,7 +146,7 @@ export default function DashboardPage() {
                 </motion.div>
             </motion.div>
           </div>
-        </motion.main>
+        </main>
       </div>
       <AddTransactionDialog
         isOpen={isAddDialogOpen}

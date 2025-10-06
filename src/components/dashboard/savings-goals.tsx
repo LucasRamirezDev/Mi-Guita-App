@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useTransactions } from "@/context/transactions-context";
@@ -6,51 +7,57 @@ import { Progress } from "@/components/ui/progress";
 import { formatCurrency } from "@/lib/utils";
 import { Target } from "lucide-react";
 import { useMemo } from "react";
+import { type SavingsGoal } from "@/lib/data";
 
-// For this mockup, we'll use a hardcoded goal.
-const savingsGoal = {
-  name: "Vacaciones en la Costa",
-  target: 1000000,
-};
-
-export function SavingsGoals() {
-  const { transactions, totalAccumulatedGoals } = useTransactions();
+const GoalCard = ({ goal }: { goal: SavingsGoal }) => {
+  const { transactions } = useTransactions();
 
   const currentPeriodGoalsSavings = useMemo(() => {
     return transactions
-      .filter(t => t.category === "Metas")
+      .filter(t => t.category === "Metas" && t.goalId === goal.id)
       .reduce((acc, t) => acc + t.amount, 0);
-  }, [transactions]);
-  
-  const totalSavingsForGoal = totalAccumulatedGoals + currentPeriodGoalsSavings;
-  const progressPercentage = (totalSavingsForGoal / savingsGoal.target) * 100;
-  const remainingAmount = savingsGoal.target - totalSavingsForGoal;
+  }, [transactions, goal.id]);
+
+  const totalSavingsForGoal = goal.accumulated + currentPeriodGoalsSavings;
+  const progressPercentage = (totalSavingsForGoal / goal.target) * 100;
+  const remainingAmount = goal.target - totalSavingsForGoal;
+
+  return (
+    <div className="space-y-2">
+      <div className="flex justify-between items-end">
+        <p className="font-semibold">{goal.name}</p>
+        <p className="text-sm text-muted-foreground">{formatCurrency(goal.target)}</p>
+      </div>
+      <Progress value={progressPercentage} aria-label={`Progreso de la meta ${goal.name}`} />
+      <div className="flex justify-between text-sm">
+        <span className="font-medium text-primary">
+          Ahorrado: {formatCurrency(totalSavingsForGoal)}
+        </span>
+        <span className="text-muted-foreground">
+          Falta: {formatCurrency(remainingAmount > 0 ? remainingAmount : 0)}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+
+export function SavingsGoals() {
+  const { allSavingsGoals } = useTransactions();
 
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-            <CardTitle>Meta de Ahorro</CardTitle>
+            <CardTitle>Metas de Ahorro</CardTitle>
             <Target className="h-5 w-5 text-primary" />
         </div>
         <CardDescription>Tu progreso para alcanzar tus objetivos financieros.</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-2">
-            <div className="flex justify-between items-end">
-                <p className="font-semibold">{savingsGoal.name}</p>
-                <p className="text-sm text-muted-foreground">{formatCurrency(savingsGoal.target)}</p>
-            </div>
-            <Progress value={progressPercentage} />
-            <div className="flex justify-between text-sm">
-                <span className="font-medium text-primary">
-                    Ahorrado: {formatCurrency(totalSavingsForGoal)}
-                </span>
-                 <span className="text-muted-foreground">
-                    Falta: {formatCurrency(remainingAmount > 0 ? remainingAmount : 0)}
-                </span>
-            </div>
-        </div>
+      <CardContent className="space-y-6">
+        {allSavingsGoals.map(goal => (
+          <GoalCard key={goal.id} goal={goal} />
+        ))}
       </CardContent>
     </Card>
   );

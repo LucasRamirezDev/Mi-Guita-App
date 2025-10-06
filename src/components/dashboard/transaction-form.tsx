@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -8,7 +9,7 @@ import { es } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { categories, Category } from "@/lib/data";
+import { categories, Category, savingsGoals } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -45,6 +46,7 @@ const formSchema = z.object({
     required_error: "Se requiere una fecha.",
   }),
   category: z.enum(categories),
+  goalId: z.string().optional(),
 }).refine(data => {
     if (data.type === 'income') {
         return data.category === 'Ingresos';
@@ -53,6 +55,14 @@ const formSchema = z.object({
 }, {
     message: "Para el tipo 'ingreso', la categoría debe ser 'Ingresos'. Para el tipo 'gasto', la categoría no puede ser 'Ingresos'.",
     path: ["category"],
+}).refine(data => {
+    if (data.category === 'Metas') {
+        return !!data.goalId;
+    }
+    return true;
+}, {
+    message: "Debe seleccionar una meta.",
+    path: ["goalId"],
 });
 
 export type TransactionFormValues = z.infer<typeof formSchema>;
@@ -75,6 +85,7 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
   });
 
   const transactionType = form.watch("type");
+  const transactionCategory = form.watch("category");
 
   const filteredCategories = categories.filter(c => {
     if (transactionType === 'income') return c === 'Ingresos';
@@ -177,6 +188,37 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
             )}
           />
         </div>
+        
+        {transactionCategory === 'Metas' && (
+          <FormField
+            control={form.control}
+            name="goalId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Asignar a Meta</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona una meta" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {savingsGoals.map((goal) => (
+                      <SelectItem key={goal.id} value={goal.id}>
+                        {goal.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
         <FormField
           control={form.control}
           name="date"

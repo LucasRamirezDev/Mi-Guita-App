@@ -3,7 +3,7 @@
 
 import React, { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowDownCircle, ArrowUpCircle, DollarSign, Landmark, Wallet, PiggyBank, Target } from "lucide-react";
+import { ArrowDownCircle, ArrowUpCircle, DollarSign, Wallet, PiggyBank } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTransactions } from "@/context/transactions-context";
@@ -25,18 +25,17 @@ type BalanceCardsProps = {
 };
 
 export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
-  const { transactions, initialBalance, totalAccumulatedSavings, totalAccumulatedGoals } = useTransactions();
+  const { transactions, initialBalance, totalAccumulatedSavings } = useTransactions();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const { totalIncome, totalExpenses, periodSavings, periodGoals } = useMemo(() => {
+  const { totalIncome, totalExpenses, periodSavings } = useMemo(() => {
     let income = 0;
     let expenses = 0;
     let savings = 0;
-    let goals = 0;
     
     const currentMonth = new Date("2025/07/01").getMonth();
     const currentYear = new Date("2025/07/01").getFullYear();
@@ -53,12 +52,10 @@ export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
         expenses += t.amount;
         if (t.category === "Ahorros") {
           savings += t.amount;
-        } else if (t.category === "Metas") {
-          goals += t.amount;
         }
       }
     }
-    return { totalIncome: income, totalExpenses: expenses, periodSavings: savings, periodGoals: goals };
+    return { totalIncome: income, totalExpenses: expenses, periodSavings: savings };
   }, [transactions]);
   
   const totalIncomeWithInitial = initialBalance + totalIncome;
