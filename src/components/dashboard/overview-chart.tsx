@@ -56,7 +56,21 @@ export function OverviewChart() {
                                 formatter={(value) => formatCurrency(value as number)}
                             />} 
                          />
-                         <Legend />
+                         <Legend content={({ payload }) => {
+                            return (
+                                <div className="flex justify-center gap-4">
+                                {payload?.map((entry) => {
+                                    const config = chartConfig[entry.dataKey as keyof typeof chartConfig];
+                                    return (
+                                    <div key={entry.value} className="flex items-center gap-1.5 text-xs">
+                                        <span className="h-2 w-2 rounded-full" style={{ backgroundColor: config.color }} />
+                                        <span>{config.label}</span>
+                                    </div>
+                                    )
+                                })}
+                                </div>
+                            )
+                            }} />
                          <Bar dataKey="income" fill="var(--color-income)" radius={4} />
                          <Bar dataKey="expenses" fill="var(--color-expenses)" radius={4} />
                     </BarChart>
