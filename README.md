@@ -62,6 +62,6 @@ Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver la 
 
 ¡Gracias por revisar este proyecto! Fue una experiencia de aprendizaje increíble sobre el poder de la IA en el desarrollo de software. Si tienes alguna pregunta, sugerencia o simplemente quieres conectar, no dudes en contactarme.
 
-*   **LinkedIn:** [Tu Perfil de LinkedIn](https://www.linkedin.com/in/tu-usuario/)
-*   **GitHub:** [Tu Perfil de GitHub](https://github.com/tu-usuario)
-*   **Portfolio:** [Tu Sitio Web](https://tu-sitio-web.com)
+*   **LinkedIn:** [Lucas®](https://www.linkedin.com/in/lucasnicol%C3%A1sram%C3%ADrez/)
+*   **Instagram:** [Lucas®](https://www.instagram.com/lramirez.di/)
+*   **Portfolio:** [Lucas®](https://www.lucasramirez.dev)
