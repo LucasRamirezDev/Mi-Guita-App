@@ -2,6 +2,8 @@
 
 **Mi Guita** es un panel de control financiero diseñado para ayudarte a administrar tus gastos e ingresos mensuales con facilidad. Es una aplicación web moderna, intuitiva y completamente funcional que te permite tomar el control de tus finanzas personales.
 
+> **⚠️ Nota Importante:** Esta aplicación es un prototipo funcional. Todos los datos que agregues (transacciones, metas, etc.) se almacenan temporalmente y **se perderán si recargas la página**. Para una solución con persistencia de datos y funcionamiento real, sería necesario implementar el correspondiente backend y su base de datos.
+
 Este proyecto fue desarrollado en **menos de 12 horas** y fue **creado 100% con asistencia de Inteligencia Artificial** dentro de Firebase Studio. El objetivo fue explorar y demostrar las capacidades de la programación asistida por IA cuando se guía con peticiones claras y específicas.
 
 ## ✨ Características
