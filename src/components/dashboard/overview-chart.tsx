@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useTransactions } from '@/context/transactions-context';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, formatCurrencyShort } from '@/lib/utils';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 export function OverviewChart() {
@@ -49,7 +49,7 @@ export function OverviewChart() {
                             axisLine={false}
                             tickFormatter={(value) => value.slice(0, 3)}
                          />
-                         <YAxis tickFormatter={(value) => `$${value/1000}k`} />
+                         <YAxis tickFormatter={(value) => formatCurrencyShort(value as number)} />
                          <ChartTooltip
                             cursor={false}
                             content={<ChartTooltipContent 
