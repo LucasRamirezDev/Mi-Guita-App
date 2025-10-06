@@ -10,7 +10,7 @@ import { useMemo } from "react";
 // For this mockup, we'll use a hardcoded goal.
 const savingsGoal = {
   name: "Vacaciones en la Costa",
-  target: 500000,
+  target: 1000000,
 };
 
 export function SavingsGoals() {
