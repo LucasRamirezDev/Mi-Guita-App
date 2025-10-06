@@ -71,7 +71,6 @@ export function TransactionsTable({ transactions: filteredTransactions }: Transa
   const balanceData = useMemo(() => {
     let income = 0;
     let expenses = 0;
-    let savings = 0;
     
     const currentMonth = new Date("2025/07/01").getMonth();
     const currentYear = new Date("2025/07/01").getFullYear();
@@ -86,22 +85,14 @@ export function TransactionsTable({ transactions: filteredTransactions }: Transa
         income += t.amount;
       } else { // expense
         expenses += t.amount;
-        if (t.category === "Ahorros") {
-          savings += t.amount;
-        }
       }
     }
-    const totalIncomeWithInitial = initialBalance + income;
-    const currentBalance = totalIncomeWithInitial - expenses;
 
     return { 
         totalIncome: income, 
-        totalExpenses: expenses, 
-        periodSavings: savings,
-        currentBalance,
-        totalSavings: totalAccumulatedSavings + savings,
+        totalExpenses: expenses,
     };
-  }, [transactions, initialBalance, totalAccumulatedSavings]);
+  }, [transactions]);
 
   const handleDelete = () => {
     if (deletingTransactionId) {
@@ -119,13 +110,9 @@ export function TransactionsTable({ transactions: filteredTransactions }: Transa
     doc.setTextColor(100);
     doc.text(`Período: Julio 2025`, 14, 28);
 
-
     const balanceSummary = [
-        ["Saldo Anterior", formatCurrency(initialBalance)],
         ["Ingresos del Mes", formatCurrency(balanceData.totalIncome)],
         ["Gastos del Mes", formatCurrency(balanceData.totalExpenses)],
-        ["Ahorro General Total", formatCurrency(balanceData.totalSavings)],
-        [{ content: "Saldo Actual", styles: { fontStyle: 'bold' } }, { content: formatCurrency(balanceData.currentBalance), styles: { fontStyle: 'bold' } }],
     ];
 
     autoTable(doc, {
