@@ -67,7 +67,7 @@ const TableRow = React.forwardRef<
 ))
 TableRow.displayName = "TableRow"
 
-const MotionTableRow = motion(TableRow);
+const MotionTableRow = motion.tr;
 
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
