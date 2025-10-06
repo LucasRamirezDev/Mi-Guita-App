@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useMemo } from "react";
@@ -116,15 +115,15 @@ export default function DashboardPage() {
            <motion.div variants={itemVariants}>
             <TransactionFilters onFiltersChange={setFilters} />
           </motion.div>
-          <div className="flex flex-col xl:flex-row gap-4 md:gap-8">
-            <motion.div className="flex-grow xl:flex-basis-2/3" variants={itemVariants}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
+            <motion.div className="lg:col-span-2" variants={itemVariants}>
                 <TransactionsTable transactions={filteredTransactions} />
             </motion.div>
-            <div className="flex-grow xl:flex-basis-1/3 grid auto-rows-max items-start gap-4 md:gap-8">
-                <motion.div variants={itemVariants}>
+            <div className="flex flex-col auto-rows-max items-start gap-4 md:gap-8">
+                <motion.div variants={itemVariants} className="w-full">
                     <SavingsGoals />
                 </motion.div>
-                <motion.div variants={itemVariants}>
+                <motion.div variants={itemVariants} className="w-full">
                     <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Ahorros del Período</CardTitle>
@@ -138,10 +137,10 @@ export default function DashboardPage() {
                     </CardContent>
                     </Card>
                 </motion.div>
-                <motion.div variants={itemVariants}>
+                <motion.div variants={itemVariants} className="w-full">
                     <ExpenseChart />
                 </motion.div>
-                <motion.div variants={itemVariants}>
+                <motion.div variants={itemVariants} className="w-full">
                     <OverviewChart />
                 </motion.div>
             </div>
