@@ -17,6 +17,7 @@ import { TransactionFilters } from "@/components/dashboard/transaction-filters";
 import { type Transaction } from "@/lib/data";
 import { SavingsGoals } from "@/components/dashboard/savings-goals";
 import { ManageGoalsDialog } from "@/components/dashboard/manage-goals-dialog";
+import { FinancialAnalysis } from "@/components/dashboard/financial-analysis";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -113,6 +114,9 @@ export default function DashboardPage() {
           <motion.div variants={itemVariants}>
             <BalanceCards isBalanceVisible={isBalanceVisible} />
           </motion.div>
+          <motion.div variants={itemVariants}>
+            <FinancialAnalysis transactions={filteredTransactions} />
+          </motion.div>
            <motion.div variants={itemVariants}>
             <TransactionFilters onFiltersChange={setFilters} />
           </motion.div>
@@ -157,7 +161,7 @@ export default function DashboardPage() {
       />
       <ManageGoalsDialog
         isOpen={isManageGoalsOpen}
-        onOpenChange={setIsManageGoalsOpen}
+        onOpenchaNGE={setIsManageGoalsOpen}
       />
     </>
   );
