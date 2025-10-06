@@ -38,6 +38,7 @@ const prompt = ai.definePrompt({
   name: 'financialAnalystPrompt',
   input: { schema: FinancialAnalysisInputSchema },
   output: { schema: FinancialAnalysisOutputSchema },
+  model: 'gemini-pro',
   prompt: `Eres "Mi Guita AI", un asistente financiero amigable y experto. Analiza la siguiente lista de transacciones del mes.
 
 Transacciones:
