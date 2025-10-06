@@ -57,9 +57,12 @@ const rowVariants = {
   },
 };
 
+type TransactionsTableProps = {
+  transactions: Transaction[];
+};
 
-export function TransactionsTable() {
-  const { transactions, deleteTransaction } = useTransactions();
+export function TransactionsTable({ transactions }: TransactionsTableProps) {
+  const { deleteTransaction } = useTransactions();
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   const [deletingTransactionId, setDeletingTransactionId] = useState<string | null>(null);
 
@@ -74,7 +77,7 @@ export function TransactionsTable() {
     <>
       <Card>
         <CardHeader>
-          <CardTitle>Transacciones Recientes</CardTitle>
+          <CardTitle>Transacciones</CardTitle>
           <CardDescription>
             Una lista de tus ingresos y gastos recientes.
           </CardDescription>
@@ -150,7 +153,7 @@ export function TransactionsTable() {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={5} className="h-24 text-center">
-                      Aún no hay transacciones.
+                      No se encontraron transacciones con los filtros aplicados.
                     </TableCell>
                   </TableRow>
                 )}

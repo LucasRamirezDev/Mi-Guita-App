@@ -12,6 +12,8 @@ import { OverviewChart } from "@/components/dashboard/overview-chart";
 import { useTransactions } from "@/context/transactions-context";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
+import { TransactionFilters } from "@/components/dashboard/transaction-filters";
+import { type Transaction } from "@/lib/data";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -34,10 +36,21 @@ const itemVariants = {
   },
 };
 
+export type Filters = {
+  query: string;
+  type: "all" | "income" | "expense";
+  category: "all" | Transaction["category"];
+};
+
 export default function DashboardPage() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const { transactions } = useTransactions();
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
+  const [filters, setFilters] = useState<Filters>({
+    query: "",
+    type: "all",
+    category: "all",
+  });
 
   const periodSavings = useMemo(() => {
     let savings = 0;
@@ -48,6 +61,19 @@ export default function DashboardPage() {
     }
     return savings;
   }, [transactions]);
+
+  const filteredTransactions = useMemo(() => {
+    return transactions.filter(t => {
+      const { query, type, category } = filters;
+      if (t.id === 'initial-balance') return false; // Always exclude initial balance from filtered list
+
+      const queryMatch = query.trim() === '' || t.description.toLowerCase().includes(query.toLowerCase());
+      const typeMatch = type === 'all' || t.type === type;
+      const categoryMatch = category === 'all' || t.category === category;
+
+      return queryMatch && typeMatch && categoryMatch;
+    });
+  }, [transactions, filters]);
   
   const toggleBalanceVisibility = () => setIsBalanceVisible(prev => !prev);
 
@@ -68,9 +94,12 @@ export default function DashboardPage() {
           <motion.div variants={itemVariants}>
             <BalanceCards isBalanceVisible={isBalanceVisible} />
           </motion.div>
+           <motion.div variants={itemVariants}>
+            <TransactionFilters onFiltersChange={setFilters} />
+          </motion.div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
             <motion.div className="lg:col-span-2" variants={itemVariants}>
-              <TransactionsTable />
+              <TransactionsTable transactions={filteredTransactions} />
             </motion.div>
             <motion.div 
               className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-1"
