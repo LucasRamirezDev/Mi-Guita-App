@@ -15,6 +15,7 @@ export const categories = [
   "Entretenimiento",
   "Salud",
   "Compras",
+  "Ahorros",
   "Ingresos",
   "Otros",
 ] as const;
@@ -24,6 +25,7 @@ export type Category = (typeof categories)[number];
 export const mockTransactions: Transaction[] = [
   { id: "1", date: new Date("2025/07/01"), description: "Salario", amount: 850000, type: "income", category: "Ingresos" },
   { id: "2", date: new Date("2025/07/01"), description: "Alquiler", amount: 350000, type: "expense", category: "Vivienda" },
+  { id: "12", date: new Date("2025/07/02"), description: "Aporte a fondo de ahorro", amount: 100000, type: "expense", category: "Ahorros" },
   { id: "3", date: new Date("2025/07/03"), description: "Supermercado (semanal)", amount: 75500, type: "expense", category: "Comida" },
   { id: "4", date: new Date("2025/07/05"), description: "Carga SUBE", amount: 8000, type: "expense", category: "Transporte" },
   { id: "5", date: new Date("2025/07/08"), description: "Proyecto freelance", amount: 150000, type: "income", category: "Ingresos" },
