@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -26,9 +27,9 @@ export function LoginForm() {
         </div>
         <Input id="password" type="password" defaultValue="password" />
       </div>
-      <Link href="/dashboard" passHref>
+      <Link href="/dashboard" passHref legacyBehavior>
         <Button asChild className="w-full">
-            <a>Sign In</a>
+          <a>Sign In</a>
         </Button>
       </Link>
       <div className="mt-4 text-center text-sm">
