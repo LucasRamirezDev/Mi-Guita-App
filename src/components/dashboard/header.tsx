@@ -6,6 +6,8 @@ import {
   LogOut,
   PlusCircle,
   User,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,12 +22,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { BudgetFlowLogo } from "@/components/icons";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type DashboardHeaderProps = {
   onAddTransaction: () => void;
+  isBalanceVisible: boolean;
+  onToggleBalanceVisibility: () => void;
 };
 
-export function DashboardHeader({ onAddTransaction }: DashboardHeaderProps) {
+export function DashboardHeader({ onAddTransaction, isBalanceVisible, onToggleBalanceVisibility }: DashboardHeaderProps) {
   const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar');
 
   return (
@@ -41,6 +46,22 @@ export function DashboardHeader({ onAddTransaction }: DashboardHeaderProps) {
             Añadir Transacción
           </span>
         </Button>
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button variant="ghost" size="icon" onClick={onToggleBalanceVisibility} className="h-8 w-8">
+                        {isBalanceVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        <span className="sr-only">
+                            {isBalanceVisible ? "Ocultar saldos" : "Mostrar saldos"}
+                        </span>
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>{isBalanceVisible ? "Ocultar saldos" : "Mostrar saldos"}</p>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon" className="overflow-hidden rounded-full">

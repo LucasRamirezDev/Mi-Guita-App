@@ -7,7 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTransactions } from "@/context/transactions-context";
 import { formatCurrency } from "@/lib/utils";
 
-export function BalanceCards() {
+type BalanceCardsProps = {
+  isBalanceVisible: boolean;
+};
+
+export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
   const { transactions, initialBalance, totalAccumulatedSavings } = useTransactions();
 
   const { totalIncome, totalExpenses, periodSavings } = useMemo(() => {
@@ -33,6 +37,8 @@ export function BalanceCards() {
     .reduce((acc, t) => acc + t.amount, 0);
 
   const currentBalance = totalIncomeWithInitial - totalExpenses;
+  
+  const balancePlaceholder = "•••••";
 
   return (
     <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 xl:grid-cols-5">
@@ -43,7 +49,7 @@ export function BalanceCards() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {formatCurrency(initialBalance)}
+            {isBalanceVisible ? formatCurrency(initialBalance) : balancePlaceholder}
           </div>
           <p className="text-xs text-muted-foreground">Dinero disponible al iniciar el período.</p>
         </CardContent>
@@ -55,7 +61,7 @@ export function BalanceCards() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-green-500">
-            {formatCurrency(totalIncomeWithInitial)}
+            {isBalanceVisible ? formatCurrency(totalIncomeWithInitial) : balancePlaceholder}
           </div>
           <p className="text-xs text-muted-foreground">Total de ingresos recibidos</p>
         </CardContent>
@@ -67,7 +73,7 @@ export function BalanceCards() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-red-500">
-            {formatCurrency(totalExpenses)}
+            {isBalanceVisible ? formatCurrency(totalExpenses) : balancePlaceholder}
           </div>
           <p className="text-xs text-muted-foreground">Total de gastos pagados</p>
         </CardContent>
@@ -79,7 +85,7 @@ export function BalanceCards() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-primary">
-            {formatCurrency(currentBalance)}
+            {isBalanceVisible ? formatCurrency(currentBalance) : balancePlaceholder}
           </div>
            <p className="text-xs text-muted-foreground">Tu resumen financiero</p>
         </CardContent>
@@ -91,7 +97,7 @@ export function BalanceCards() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {formatCurrency(totalAccumulatedSavings + periodSavings)}
+            {isBalanceVisible ? formatCurrency(totalAccumulatedSavings + periodSavings) : balancePlaceholder}
           </div>
           <p className="text-xs text-muted-foreground">Tu fondo de ahorro total.</p>
         </CardContent>

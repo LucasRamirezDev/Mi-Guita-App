@@ -15,6 +15,7 @@ import { formatCurrency } from "@/lib/utils";
 export default function DashboardPage() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const { transactions } = useTransactions();
+  const [isBalanceVisible, setIsBalanceVisible] = useState(true);
 
   const periodSavings = useMemo(() => {
     let savings = 0;
@@ -25,13 +26,19 @@ export default function DashboardPage() {
     }
     return savings;
   }, [transactions]);
+  
+  const toggleBalanceVisibility = () => setIsBalanceVisible(prev => !prev);
 
   return (
     <>
       <div className="flex min-h-screen w-full flex-col">
-        <DashboardHeader onAddTransaction={() => setIsAddDialogOpen(true)} />
+        <DashboardHeader 
+          onAddTransaction={() => setIsAddDialogOpen(true)}
+          isBalanceVisible={isBalanceVisible}
+          onToggleBalanceVisibility={toggleBalanceVisibility}
+        />
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-          <BalanceCards />
+          <BalanceCards isBalanceVisible={isBalanceVisible} />
           <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
             <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
               <TransactionsTable />
@@ -45,7 +52,7 @@ export default function DashboardPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold text-blue-500">
-                      {formatCurrency(periodSavings)}
+                      {isBalanceVisible ? formatCurrency(periodSavings) : "•••••"}
                     </div>
                     <p className="text-xs text-muted-foreground">Suma de tus aportes a ahorros este mes.</p>
                   </CardContent>
