@@ -116,33 +116,33 @@ export default function DashboardPage() {
            <motion.div variants={itemVariants}>
             <TransactionFilters onFiltersChange={setFilters} />
           </motion.div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
-            <motion.div className="lg:col-span-2" variants={itemVariants}>
-              <TransactionsTable transactions={filteredTransactions} />
+          <div className="flex flex-col xl:flex-row gap-4 md:gap-8">
+            <motion.div className="flex-grow xl:flex-basis-2/3" variants={itemVariants}>
+                <TransactionsTable transactions={filteredTransactions} />
             </motion.div>
-            <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-1">
+            <div className="flex-grow xl:flex-basis-1/3 grid auto-rows-max items-start gap-4 md:gap-8">
                 <motion.div variants={itemVariants}>
-                  <SavingsGoals />
+                    <SavingsGoals />
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                  <Card>
+                    <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">Ahorros del Período</CardTitle>
-                      <PiggyBank className="h-4 w-4 text-blue-500" />
+                        <CardTitle className="text-sm font-medium">Ahorros del Período</CardTitle>
+                        <PiggyBank className="h-4 w-4 text-blue-500" />
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold text-blue-500">
+                        <div className="text-2xl font-bold text-blue-500">
                         {isBalanceVisible ? formatCurrency(periodSavings) : "•••••"}
-                      </div>
-                      <p className="text-xs text-muted-foreground">Suma de tus aportes a ahorros este mes.</p>
+                        </div>
+                        <p className="text-xs text-muted-foreground">Suma de tus aportes a ahorros este mes.</p>
                     </CardContent>
-                  </Card>
+                    </Card>
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                  <ExpenseChart />
+                    <ExpenseChart />
                 </motion.div>
                 <motion.div variants={itemVariants}>
-                  <OverviewChart />
+                    <OverviewChart />
                 </motion.div>
             </div>
           </div>
