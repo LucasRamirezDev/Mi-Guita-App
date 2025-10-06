@@ -24,7 +24,9 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <ThemeProvider
+          attribute="class"
           defaultTheme="system"
+          enableSystem
         >
           {children}
           <Toaster />
