@@ -14,9 +14,9 @@ export default function Home() {
       <Card className="w-full max-w-sm">
         <CardHeader className="items-center text-center">
           <BudgetFlowLogo className="mb-4 h-12 w-12 text-primary" />
-          <CardTitle className="text-2xl font-bold">Welcome to BudgetFlow</CardTitle>
+          <CardTitle className="text-2xl font-bold">Bienvenido a BudgetFlow</CardTitle>
           <CardDescription>
-            Sign in to manage your finances.
+            Inicia sesión para administrar tus finanzas.
           </CardDescription>
         </CardHeader>
         <CardContent>

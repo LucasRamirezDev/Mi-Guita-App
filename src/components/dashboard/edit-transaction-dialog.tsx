@@ -33,9 +33,9 @@ export function EditTransactionDialog({
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Transaction</DialogTitle>
+          <DialogTitle>Editar Transacción</DialogTitle>
           <DialogDescription>
-            Update the details of your transaction.
+            Actualiza los detalles de tu transacción.
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">

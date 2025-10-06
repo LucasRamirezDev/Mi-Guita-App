@@ -24,11 +24,11 @@ export function OverviewChart() {
     
     const chartConfig = {
         income: {
-            label: "Income",
+            label: "Ingresos",
             color: "hsl(var(--chart-1))",
         },
         expenses: {
-            label: "Expenses",
+            label: "Gastos",
             color: "hsl(var(--chart-5))",
         },
     }
@@ -36,8 +36,8 @@ export function OverviewChart() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Income vs. Expenses</CardTitle>
-                 <CardDescription>A summary of your total income and expenses.</CardDescription>
+                <CardTitle>Ingresos vs. Gastos</CardTitle>
+                 <CardDescription>Un resumen de tus ingresos y gastos totales.</CardDescription>
             </CardHeader>
             <CardContent>
                  <ChartContainer config={chartConfig} className="min-h-[200px] w-full">

@@ -30,9 +30,9 @@ export function AddTransactionDialog({
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Transaction</DialogTitle>
+          <DialogTitle>Añadir Transacción</DialogTitle>
           <DialogDescription>
-            Enter the details of your new transaction below.
+            Introduce los detalles de tu nueva transacción a continuación.
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">

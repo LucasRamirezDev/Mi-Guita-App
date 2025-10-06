@@ -10,32 +10,32 @@ export function LoginForm() {
   return (
     <div className="grid gap-4">
       <div className="grid gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Correo electrónico</Label>
         <Input
           id="email"
           type="email"
-          placeholder="user@example.com"
-          defaultValue="user@example.com"
+          placeholder="usuario@example.com"
+          defaultValue="usuario@example.com"
         />
       </div>
       <div className="grid gap-2">
         <div className="flex items-center">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">Contraseña</Label>
           <Link href="#" className="ml-auto inline-block text-sm underline" prefetch={false}>
-            Forgot your password?
+            ¿Olvidaste tu contraseña?
           </Link>
         </div>
         <Input id="password" type="password" defaultValue="password" />
       </div>
-      <Link href="/dashboard" passHref legacyBehavior>
-        <Button asChild className="w-full">
-          <a>Sign In</a>
+      <Link href="/dashboard" passHref>
+        <Button className="w-full">
+          Iniciar sesión
         </Button>
       </Link>
       <div className="mt-4 text-center text-sm">
-        Don&apos;t have an account?{" "}
+        ¿No tienes una cuenta?{" "}
         <Link href="#" className="underline" prefetch={false}>
-          Sign up
+          Regístrate
         </Link>
       </div>
     </div>

@@ -26,8 +26,8 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     const newTransaction = { ...transaction, id: crypto.randomUUID() };
     setTransactions((prev) => [newTransaction, ...prev].sort((a, b) => b.date.getTime() - a.date.getTime()));
     toast({
-      title: "Transaction Added",
-      description: `Successfully added "${newTransaction.description}".`,
+      title: "Transacción Añadida",
+      description: `Se añadió "${newTransaction.description}" correctamente.`,
     });
   };
 
@@ -37,8 +37,8 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
       .sort((a, b) => b.date.getTime() - a.date.getTime())
     );
      toast({
-      title: "Transaction Updated",
-      description: `Successfully updated "${updatedTransaction.description}".`,
+      title: "Transacción Actualizada",
+      description: `Se actualizó "${updatedTransaction.description}" correctamente.`,
     });
   };
 
@@ -47,8 +47,8 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     setTransactions((prev) => prev.filter((t) => t.id !== id));
     if (transactionToDelete) {
         toast({
-            title: "Transaction Deleted",
-            description: `Successfully deleted "${transactionToDelete.description}".`,
+            title: "Transacción Eliminada",
+            description: `Se eliminó "${transactionToDelete.description}" correctamente.`,
             variant: "destructive"
         });
     }
@@ -72,7 +72,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
 export const useTransactions = () => {
   const context = useContext(TransactionsContext);
   if (context === undefined) {
-    throw new Error("useTransactions must be used within a TransactionsProvider");
+    throw new Error("useTransactions debe ser usado dentro de un TransactionsProvider");
   }
   return context;
 };

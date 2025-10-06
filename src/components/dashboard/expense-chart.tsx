@@ -40,11 +40,11 @@ export function ExpenseChart() {
         return (
             <Card>
                 <CardHeader>
-                    <CardTitle>Expense Distribution</CardTitle>
-                    <CardDescription>A breakdown of your expenses by category.</CardDescription>
+                    <CardTitle>Distribución de Gastos</CardTitle>
+                    <CardDescription>Un desglose de tus gastos por categoría.</CardDescription>
                 </CardHeader>
                 <CardContent className="flex h-[350px] w-full items-center justify-center">
-                    <p className="text-muted-foreground">No expense data to display.</p>
+                    <p className="text-muted-foreground">No hay datos de gastos para mostrar.</p>
                 </CardContent>
             </Card>
         )
@@ -53,8 +53,8 @@ export function ExpenseChart() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Expense Distribution</CardTitle>
-                <CardDescription>A breakdown of your expenses by category.</CardDescription>
+                <CardTitle>Distribución de Gastos</CardTitle>
+                <CardDescription>Un desglose de tus gastos por categoría.</CardDescription>
             </CardHeader>
             <CardContent>
                 <ResponsiveContainer width="100%" height={350}>
@@ -68,7 +68,7 @@ export function ExpenseChart() {
                                             <div className="grid grid-cols-2 gap-2">
                                                 <div className="flex flex-col">
                                                     <span className="text-[0.70rem] uppercase text-muted-foreground">
-                                                        Category
+                                                        Categoría
                                                     </span>
                                                     <span className="font-bold text-muted-foreground">
                                                         {payload[0].name}
@@ -76,7 +76,7 @@ export function ExpenseChart() {
                                                 </div>
                                                 <div className="flex flex-col">
                                                      <span className="text-[0.70rem] uppercase text-muted-foreground">
-                                                        Amount
+                                                        Monto
                                                     </span>
                                                     <span className="font-bold">
                                                         {formatCurrency(payload[0].value as number)}

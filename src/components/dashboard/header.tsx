@@ -38,7 +38,7 @@ export function DashboardHeader({ onAddTransaction }: DashboardHeaderProps) {
         <Button size="sm" className="h-8 gap-1" onClick={onAddTransaction}>
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Add Transaction
+            Añadir Transacción
           </span>
         </Button>
         <DropdownMenu>
@@ -53,15 +53,15 @@ export function DashboardHeader({ onAddTransaction }: DashboardHeaderProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
+            <DropdownMenuItem>Configuración</DropdownMenuItem>
+            <DropdownMenuItem>Soporte</DropdownMenuItem>
             <DropdownMenuSeparator />
             <Link href="/" passHref>
               <DropdownMenuItem>
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>Logout</span>
+                <span>Cerrar Sesión</span>
               </DropdownMenuItem>
             </Link>
           </DropdownMenuContent>

@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { MoreHorizontal, Edit, Trash2 } from "lucide-react";
 import { useTransactions } from "@/context/transactions-context";
 import { type Transaction } from "@/lib/data";
@@ -52,21 +53,21 @@ export function TransactionsTable() {
     <>
       <Card>
         <CardHeader>
-          <CardTitle>Recent Transactions</CardTitle>
+          <CardTitle>Transacciones Recientes</CardTitle>
           <CardDescription>
-            A list of your recent income and expenses.
+            Una lista de tus ingresos y gastos recientes.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Description</TableHead>
-                <TableHead className="hidden sm:table-cell">Category</TableHead>
-                <TableHead className="hidden md:table-cell">Date</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
+                <TableHead>Descripción</TableHead>
+                <TableHead className="hidden sm:table-cell">Categoría</TableHead>
+                <TableHead className="hidden md:table-cell">Fecha</TableHead>
+                <TableHead className="text-right">Monto</TableHead>
                 <TableHead className="w-[50px]">
-                    <span className="sr-only">Actions</span>
+                    <span className="sr-only">Acciones</span>
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -76,12 +77,12 @@ export function TransactionsTable() {
                   <TableRow key={t.id}>
                     <TableCell>
                       <div className="font-medium">{t.description}</div>
-                      <div className="text-sm text-muted-foreground md:hidden">{format(t.date, "PP")}</div>
+                      <div className="text-sm text-muted-foreground md:hidden">{format(t.date, "PP", { locale: es })}</div>
                     </TableCell>
                     <TableCell className="hidden sm:table-cell">
                       <Badge variant="outline">{t.category}</Badge>
                     </TableCell>
-                    <TableCell className="hidden md:table-cell">{format(t.date, "PPP")}</TableCell>
+                    <TableCell className="hidden md:table-cell">{format(t.date, "PPP", { locale: es })}</TableCell>
                     <TableCell
                       className={cn(
                         "text-right font-medium",
@@ -102,11 +103,11 @@ export function TransactionsTable() {
                             <DropdownMenuContent align="end">
                                 <DropdownMenuItem onSelect={() => setEditingTransaction(t)}>
                                     <Edit className="mr-2 h-4 w-4"/>
-                                    Edit
+                                    Editar
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onSelect={() => setDeletingTransactionId(t.id)} className="text-red-500">
                                     <Trash2 className="mr-2 h-4 w-4"/>
-                                    Delete
+                                    Eliminar
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
@@ -116,7 +117,7 @@ export function TransactionsTable() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={5} className="h-24 text-center">
-                    No transactions yet.
+                    Aún no hay transacciones.
                   </TableCell>
                 </TableRow>
               )}
@@ -136,14 +137,14 @@ export function TransactionsTable() {
       <AlertDialog open={!!deletingTransactionId} onOpenChange={(isOpen) => !isOpen && setDeletingTransactionId(null)}>
         <AlertDialogContent>
             <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>¿Estás absolutamente seguro?</AlertDialogTitle>
             <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete this transaction.
+                Esta acción no se puede deshacer. Esto eliminará permanentemente esta transacción.
             </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete}>Continuar</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

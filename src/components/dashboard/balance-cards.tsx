@@ -28,50 +28,50 @@ export function BalanceCards() {
     <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Initial Balance</CardTitle>
+          <CardTitle className="text-sm font-medium">Saldo Inicial</CardTitle>
           <Wallet className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
             {formatCurrency(initialBalance)}
           </div>
-          <p className="text-xs text-muted-foreground">Starting balance for this period</p>
+          <p className="text-xs text-muted-foreground">Saldo inicial para este período</p>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Income</CardTitle>
+          <CardTitle className="text-sm font-medium">Ingresos Totales</CardTitle>
           <ArrowUpCircle className="h-4 w-4 text-green-500" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-green-500">
             {formatCurrency(totalIncome)}
           </div>
-          <p className="text-xs text-muted-foreground">Total income received</p>
+          <p className="text-xs text-muted-foreground">Total de ingresos recibidos</p>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
+          <CardTitle className="text-sm font-medium">Gastos Totales</CardTitle>
           <ArrowDownCircle className="h-4 w-4 text-red-500" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-red-500">
             {formatCurrency(totalExpenses)}
           </div>
-          <p className="text-xs text-muted-foreground">Total expenses paid</p>
+          <p className="text-xs text-muted-foreground">Total de gastos pagados</p>
         </CardContent>
       </Card>
       <Card className="bg-primary/10 border-primary">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Current Balance</CardTitle>
+          <CardTitle className="text-sm font-medium">Saldo Actual</CardTitle>
           <DollarSign className="h-4 w-4 text-primary" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-primary">
             {formatCurrency(currentBalance)}
           </div>
-           <p className="text-xs text-muted-foreground">Your financial snapshot</p>
+           <p className="text-xs text-muted-foreground">Tu resumen financiero</p>
         </CardContent>
       </Card>
     </div>

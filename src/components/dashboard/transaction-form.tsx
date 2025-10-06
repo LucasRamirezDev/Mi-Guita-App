@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -36,21 +37,21 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const formSchema = z.object({
   description: z.string().min(2, {
-    message: "Description must be at least 2 characters.",
+    message: "La descripción debe tener al menos 2 caracteres.",
   }),
-  amount: z.coerce.number().positive({ message: "Amount must be a positive number." }),
+  amount: z.coerce.number().positive({ message: "El monto debe ser un número positivo." }),
   type: z.enum(["income", "expense"]),
   date: z.date({
-    required_error: "A date is required.",
+    required_error: "Se requiere una fecha.",
   }),
   category: z.enum(categories),
 }).refine(data => {
     if (data.type === 'income') {
-        return data.category === 'Income';
+        return data.category === 'Ingresos';
     }
-    return data.category !== 'Income';
+    return data.category !== 'Ingresos';
 }, {
-    message: "For 'income' type, category must be 'Income'. For 'expense' type, category cannot be 'Income'.",
+    message: "Para el tipo 'ingreso', la categoría debe ser 'Ingresos'. Para el tipo 'gasto', la categoría no puede ser 'Ingresos'.",
     path: ["category"],
 });
 
@@ -69,14 +70,15 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
       amount: 0,
       type: "expense",
       date: new Date(),
+      category: 'Otros'
     },
   });
 
   const transactionType = form.watch("type");
 
   const filteredCategories = categories.filter(c => {
-    if (transactionType === 'income') return c === 'Income';
-    return c !== 'Income';
+    if (transactionType === 'income') return c === 'Ingresos';
+    return c !== 'Ingresos';
   });
 
   return (
@@ -87,9 +89,9 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>Descripción</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. Groceries" {...field} />
+                <Input placeholder="ej. Comestibles" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -100,7 +102,7 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
           name="amount"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Amount</FormLabel>
+              <FormLabel>Monto</FormLabel>
               <FormControl>
                 <Input type="number" placeholder="0.00" {...field} />
               </FormControl>
@@ -114,13 +116,13 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
             name="type"
             render={({ field }) => (
               <FormItem className="space-y-3">
-                <FormLabel>Type</FormLabel>
+                <FormLabel>Tipo</FormLabel>
                 <FormControl>
                   <RadioGroup
                     onValueChange={(value) => {
                       field.onChange(value);
-                      if (value === 'income') form.setValue('category', 'Income');
-                      else if (form.getValues('category') === 'Income') form.setValue('category', 'Other');
+                      if (value === 'income') form.setValue('category', 'Ingresos');
+                      else if (form.getValues('category') === 'Ingresos') form.setValue('category', 'Otros');
                     }}
                     defaultValue={field.value}
                     className="flex space-x-4"
@@ -129,13 +131,13 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
                       <FormControl>
                         <RadioGroupItem value="expense" />
                       </FormControl>
-                      <FormLabel className="font-normal">Expense</FormLabel>
+                      <FormLabel className="font-normal">Gasto</FormLabel>
                     </FormItem>
                     <FormItem className="flex items-center space-x-2 space-y-0">
                       <FormControl>
                         <RadioGroupItem value="income" />
                       </FormControl>
-                      <FormLabel className="font-normal">Income</FormLabel>
+                      <FormLabel className="font-normal">Ingreso</FormLabel>
                     </FormItem>
                   </RadioGroup>
                 </FormControl>
@@ -148,7 +150,7 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
             name="category"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category</FormLabel>
+                <FormLabel>Categoría</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -156,7 +158,7 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a category" />
+                      <SelectValue placeholder="Selecciona una categoría" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -177,7 +179,7 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
           name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Transaction Date</FormLabel>
+              <FormLabel>Fecha de Transacción</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -189,9 +191,9 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
                       )}
                     >
                       {field.value ? (
-                        format(field.value, "PPP")
+                        format(field.value, "PPP", { locale: es })
                       ) : (
-                        <span>Pick a date</span>
+                        <span>Elige una fecha</span>
                       )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -199,6 +201,7 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
+                    locale={es}
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
@@ -214,7 +217,7 @@ export function TransactionForm({ onSubmit, defaultValues }: TransactionFormProp
           )}
         />
         <Button type="submit" className="w-full">
-            {defaultValues?.id ? 'Save Changes' : 'Add Transaction'}
+            {defaultValues?.id ? 'Guardar Cambios' : 'Añadir Transacción'}
         </Button>
       </form>
     </Form>
