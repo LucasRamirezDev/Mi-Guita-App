@@ -35,7 +35,7 @@ export function BalanceCards() {
           <div className="text-2xl font-bold">
             {formatCurrency(initialBalance)}
           </div>
-          <p className="text-xs text-muted-foreground">El dinero que tenías al comienzo del período.</p>
+          <p className="text-xs text-muted-foreground">Dinero ahorrado del período anterior.</p>
         </CardContent>
       </Card>
       <Card>
