@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from "react";
@@ -75,7 +76,7 @@ export function TransactionsTable() {
                   <TableRow key={t.id}>
                     <TableCell>
                       <div className="font-medium">{t.description}</div>
-                      <div className="text-sm text-muted-foreground md:hidden">{format(t.date, "PPP")}</div>
+                      <div className="text-sm text-muted-foreground md:hidden">{format(t.date, "PP")}</div>
                     </TableCell>
                     <TableCell className="hidden sm:table-cell">
                       <Badge variant="outline">{t.category}</Badge>
