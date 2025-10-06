@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { MoreHorizontal, Edit, Trash2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTransactions } from "@/context/transactions-context";
 import { type Transaction } from "@/lib/data";
 import { cn, formatCurrency } from "@/lib/utils";
@@ -36,6 +37,26 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { EditTransactionDialog } from "./edit-transaction-dialog";
+
+const rowVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.05,
+      duration: 0.3,
+    },
+  }),
+  exit: {
+    opacity: 0,
+    x: -50,
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
+
 
 export function TransactionsTable() {
   const { transactions, deleteTransaction } = useTransactions();
@@ -71,59 +92,70 @@ export function TransactionsTable() {
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {transactions.length > 0 ? (
-                transactions.map((t) => (
-                  <TableRow key={t.id}>
-                    <TableCell>
-                      <div className="font-medium">{t.description}</div>
-                      <div className="text-sm text-muted-foreground md:hidden">{format(t.date, "PP", { locale: es })}</div>
-                    </TableCell>
-                    <TableCell className="hidden sm:table-cell">
-                      <Badge variant="outline">{t.category}</Badge>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">{format(t.date, "PPP", { locale: es })}</TableCell>
-                    <TableCell
-                      className={cn(
-                        "text-right font-medium",
-                        t.type === "income" ? "text-green-500" : "text-red-500"
-                      )}
+            <AnimatePresence>
+              <TableBody>
+                {transactions.length > 0 ? (
+                  transactions.map((t, i) => (
+                    <motion.tr
+                      key={t.id}
+                      custom={i}
+                      variants={rowVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      layout
+                      className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
                     >
-                      {t.type === "income" ? "+" : "-"}
-                      {formatCurrency(t.amount)}
-                    </TableCell>
-                    <TableCell>
-                      {t.id !== 'initial-balance' && (
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button aria-haspopup="true" size="icon" variant="ghost">
-                                    <MoreHorizontal className="h-4 w-4" />
-                                    <span className="sr-only">Toggle menu</span>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuItem onSelect={() => setEditingTransaction(t)}>
-                                    <Edit className="mr-2 h-4 w-4"/>
-                                    Editar
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onSelect={() => setDeletingTransactionId(t.id)} className="text-red-500">
-                                    <Trash2 className="mr-2 h-4 w-4"/>
-                                    Eliminar
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                      )}
+                      <TableCell>
+                        <div className="font-medium">{t.description}</div>
+                        <div className="text-sm text-muted-foreground md:hidden">{format(t.date, "PP", { locale: es })}</div>
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        <Badge variant="outline">{t.category}</Badge>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">{format(t.date, "PPP", { locale: es })}</TableCell>
+                      <TableCell
+                        className={cn(
+                          "text-right font-medium",
+                          t.type === "income" ? "text-green-500" : "text-red-500"
+                        )}
+                      >
+                        {t.type === "income" ? "+" : "-"}
+                        {formatCurrency(t.amount)}
+                      </TableCell>
+                      <TableCell>
+                        {t.id !== 'initial-balance' && (
+                          <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                  <Button aria-haspopup="true" size="icon" variant="ghost">
+                                      <MoreHorizontal className="h-4 w-4" />
+                                      <span className="sr-only">Toggle menu</span>
+                                  </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                  <DropdownMenuItem onSelect={() => setEditingTransaction(t)}>
+                                      <Edit className="mr-2 h-4 w-4"/>
+                                      Editar
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem onSelect={() => setDeletingTransactionId(t.id)} className="text-red-500">
+                                      <Trash2 className="mr-2 h-4 w-4"/>
+                                      Eliminar
+                                  </DropdownMenuItem>
+                              </DropdownMenuContent>
+                          </DropdownMenu>
+                        )}
+                      </TableCell>
+                    </motion.tr>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={5} className="h-24 text-center">
+                      Aún no hay transacciones.
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={5} className="h-24 text-center">
-                    Aún no hay transacciones.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
+                )}
+              </TableBody>
+            </AnimatePresence>
           </Table>
         </CardContent>
       </Card>

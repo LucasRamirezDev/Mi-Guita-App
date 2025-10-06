@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { PiggyBank } from "lucide-react";
+import { motion } from "framer-motion";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { BalanceCards } from "@/components/dashboard/balance-cards";
 import { TransactionsTable } from "@/components/dashboard/transactions-table";
@@ -11,6 +12,27 @@ import { OverviewChart } from "@/components/dashboard/overview-chart";
 import { useTransactions } from "@/context/transactions-context";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
 
 export default function DashboardPage() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -37,30 +59,46 @@ export default function DashboardPage() {
           isBalanceVisible={isBalanceVisible}
           onToggleBalanceVisibility={toggleBalanceVisibility}
         />
-        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-          <BalanceCards isBalanceVisible={isBalanceVisible} />
+        <motion.main 
+          className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div variants={itemVariants}>
+            <BalanceCards isBalanceVisible={isBalanceVisible} />
+          </motion.div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
-            <div className="lg:col-span-2">
+            <motion.div className="lg:col-span-2" variants={itemVariants}>
               <TransactionsTable />
-            </div>
-            <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-1">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Ahorros del Período</CardTitle>
-                    <PiggyBank className="h-4 w-4 text-blue-500" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-blue-500">
-                      {isBalanceVisible ? formatCurrency(periodSavings) : "•••••"}
-                    </div>
-                    <p className="text-xs text-muted-foreground">Suma de tus aportes a ahorros este mes.</p>
-                  </CardContent>
-                </Card>
-                <ExpenseChart />
-                <OverviewChart />
-            </div>
+            </motion.div>
+            <motion.div 
+              className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-1"
+              variants={containerVariants}
+            >
+                <motion.div variants={itemVariants}>
+                  <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="text-sm font-medium">Ahorros del Período</CardTitle>
+                      <PiggyBank className="h-4 w-4 text-blue-500" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-blue-500">
+                        {isBalanceVisible ? formatCurrency(periodSavings) : "•••••"}
+                      </div>
+                      <p className="text-xs text-muted-foreground">Suma de tus aportes a ahorros este mes.</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <ExpenseChart />
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <OverviewChart />
+                </motion.div>
+            </motion.div>
           </div>
-        </main>
+        </motion.main>
       </div>
       <AddTransactionDialog
         isOpen={isAddDialogOpen}
