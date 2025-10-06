@@ -18,7 +18,7 @@ export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
     let income = 0;
     let expenses = 0;
     let savings = 0;
-    // We exclude the initialBalance from the income calculation here, as it's already part of the transactions
+    
     for (const t of transactions.filter(t => t.id !== 'initial-balance')) {
       if (t.type === "income") {
         income += t.amount;
@@ -41,8 +41,8 @@ export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
   const balancePlaceholder = "•••••";
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 xl:grid-cols-5">
-      <Card className="xl:col-span-1">
+    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Saldo del Mes Anterior</CardTitle>
           <Wallet className="h-4 w-4 text-muted-foreground" />
@@ -54,7 +54,7 @@ export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
           <p className="text-xs text-muted-foreground">Dinero disponible al iniciar el período.</p>
         </CardContent>
       </Card>
-      <Card className="xl:col-span-1">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Ingresos Totales</CardTitle>
           <ArrowUpCircle className="h-4 w-4 text-green-500" />
@@ -66,7 +66,7 @@ export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
           <p className="text-xs text-muted-foreground">Total de ingresos recibidos</p>
         </CardContent>
       </Card>
-      <Card className="xl:col-span-1">
+      <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Gastos Totales</CardTitle>
           <ArrowDownCircle className="h-4 w-4 text-red-500" />
@@ -78,7 +78,7 @@ export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
           <p className="text-xs text-muted-foreground">Total de gastos pagados</p>
         </CardContent>
       </Card>
-      <Card className="bg-primary/10 border-primary xl:col-span-1">
+      <Card className="bg-primary/10 border-primary">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Saldo Actual</CardTitle>
           <DollarSign className="h-4 w-4 text-primary" />
@@ -90,7 +90,7 @@ export function BalanceCards({ isBalanceVisible }: BalanceCardsProps) {
            <p className="text-xs text-muted-foreground">Tu resumen financiero</p>
         </CardContent>
       </Card>
-       <Card className="xl:col-span-1">
+       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Ahorros Totales</CardTitle>
           <Landmark className="h-4 w-4 text-muted-foreground" />

@@ -39,12 +39,11 @@ export default function DashboardPage() {
         />
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
           <BalanceCards isBalanceVisible={isBalanceVisible} />
-          <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-            <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+            <div className="lg:col-span-2">
               <TransactionsTable />
             </div>
             <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-1">
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Ahorros del Período</CardTitle>
@@ -59,7 +58,6 @@ export default function DashboardPage() {
                 </Card>
                 <ExpenseChart />
                 <OverviewChart />
-              </div>
             </div>
           </div>
         </main>
