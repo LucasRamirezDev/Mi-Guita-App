@@ -23,6 +23,7 @@ import {
 import { MiGuitaLogo } from "@/components/icons";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { ThemeToggle } from "../theme-toggle";
 
 type DashboardHeaderProps = {
   onAddTransaction: () => void;
@@ -61,6 +62,8 @@ export function DashboardHeader({ onAddTransaction, isBalanceVisible, onToggleBa
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>
+
+        <ThemeToggle />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
