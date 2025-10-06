@@ -1,4 +1,4 @@
-# Mi Guita: Tu Asistente Financiero Personal 💰
+# Mi Guita: Tu Asistente Financiero Personal 💰 
 
 **Mi Guita** es un panel de control financiero diseñado para ayudarte a administrar tus gastos e ingresos mensuales con facilidad. Es una aplicación web moderna, intuitiva y completamente funcional que te permite tomar el control de tus finanzas personales.
 
